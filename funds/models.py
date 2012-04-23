@@ -7,6 +7,7 @@ class Teacher(models.Model):
     name = models.CharField(max_length=10)
     title = models.CharField(max_length=32)
     department = models.ForeignKey(Department)
+    is_dean = models.BooleanField()
 
 class ProjectType(models.Model):
     name = models.CharField(max_length=32)
@@ -45,10 +46,12 @@ class DeviceExpense(models.Model):
     device = models.ForeignKey(Device)
     amount = models.IntegerField()
     created_at = models.DateTimeField()
+    status = models.IntegerField()
 
 class BusinessExpense(models.Model):
-    device = models.ForeignKey(Business)
+    business = models.ForeignKey(Business)
     amount = models.FloatField()
     created_at = models.DateTimeField()
+    status = models.IntegerField()
 
 # Create your models here.
