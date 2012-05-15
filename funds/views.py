@@ -2,14 +2,14 @@
 #coding=utf-8
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from funds.models import Teacher 
-from funds.models import Department 
+#from funds.models import Teacher
+from funds.models import Department
 
 def index(request):
     return render_to_response('index.html')
 
 def teacher_view(request):
-    departments = [] 
+    departments = []
     departmentList = Department.objects.all()
     for dt in departmentList:
 	teacherList = dt.teacher_set.all()
@@ -24,15 +24,18 @@ def teacher_add(request):
         #save teacher and redirect to teacher_view
         pass
     else:
-        departments = []
-        return render_to_response('teacher_add.html', {'departments': departments})
+        #departments = []
+        departments = Department.objects.all()
+        return HttpResponse(departments)
+        #return render_to_response('teacher_add.html', {'departments': departments})
 
 def teacher_edit(request, teacher_id):
     if request.method == 'POST':
         #save teacher and redirect to teacher_view
         pass
     else:
-        departments = []
+        #departments = []
+        departments = Department.objects.all()
         teacher = 0
         return render_to_response('teacher_edit.html', {'departments': departments, teacher: teacher})
 
