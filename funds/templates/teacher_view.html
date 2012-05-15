@@ -1,11 +1,12 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {% extends 'layout.html' %}
 {% block content%}
     <div id="home"></div>
-    <div class="content_box_content">            
-        {% for department in deparments %}
+    <div class="content_box_content"> 
+        {% for department in departments %}
             <table class="table">
                 <thead>
-                    <h3>{{ department['name'] }}</h3>
+                    <h3>{{ department.name }}</h3>
                 </thead>
                 <tbody>
                     <tr>
@@ -13,9 +14,8 @@
                         <th>职称</th>
                         <th>系主任</th>
                     </tr>
-                    {% for teacher in department['teachers'] %}
-                    <tr {% if (forloop.counter % 2 == 1) %}class='alt'{% endif %}>
-                        <td>{{ teacher.name }}</td>
+                    {% for teacher in department.teachers %}
+			<td>{{ teacher.name }}</td>
                         <td>{{ teacher.title }}</td>
                         <td>
                             {% if teacher.is_dean %}

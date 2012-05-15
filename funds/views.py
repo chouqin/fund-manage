@@ -1,12 +1,22 @@
 # Create your views here.
+#coding=utf-8
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from funds.models import Teacher 
+from funds.models import Department 
 
 def index(request):
     return render_to_response('index.html')
 
 def teacher_view(request):
-    #departments array
-    departments = []
+    departments = [] 
+    departmentList = Department.objects.all()
+    for dt in departmentList:
+	teacherList = dt.teacher_set.all()
+	department_teachers={}
+	department_teachers['name']=dt.name
+	department_teachers['teachers'] = teacherList
+	departments.append(department_teachers)
     return render_to_response('teacher_view.html', {'departments': departments})
 
 def teacher_add(request):
