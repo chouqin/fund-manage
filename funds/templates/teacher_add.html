@@ -2,12 +2,22 @@
 {% block content%}
     <div id="home"></div>
     <div class="content_box_content">            
-        <form action="/teacher/add" method="POST">
-            {% for department in departments %}
-            <input type="radio" name="deparment" value="{{ deparment.id }}"></input>
-            <label for="deparment{ {forloop.counter} }">
-            {% endfor %}
-            <input type="text" name="name"></input>
+        <form class="uniform" action="/teacher/add" method="POST">
+            <ul>
+                <li>
+                <label>所在系:</label>
+                    <select name="department">
+                        {% for department in departments %}
+                        <option value="{{ deparment.id }}">{{ deparment.name }}</option>
+                        {% endfor %}
+                    </select>
+                    </li>
+                    <li><label>姓名:</label><input type="text" name="name"/></li>
+                    <li><label>职称:</label><input type="text" name="title"/></li>
+                    <li><label>是否是系主任:</label><input type="checkbox" name="is_dean"/></li>
+                    <!--<li><input type="submit"/><input type="reset"/></li>-->
+                    <li><button type="submit">提交</button><button type="reset">重置</button></li>
+            </ul>
         </form>
     <div class="cleaner"></div>
     </div> <!-- end of content box content -->
