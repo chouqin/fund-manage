@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block content%}
+    <div id="home"></div>
+    <div class="content_box_content">            
+        <form action="/teacher/add" method="POST">
+            {% for department in departments %}
+            <input type="radio" name="deparment" value="{{ deparment.id }}"></input>
+            <label for="deparment{ {forloop.counter} }">
+            {% endfor %}
+            <input type="text" name="name"></input>
+        </form>
+    <div class="cleaner"></div>
+    </div> <!-- end of content box content -->
+{% endblock %}

@@ -12,6 +12,12 @@ urlpatterns = patterns('funds.views',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'index'),
+    url(r'^home$', 'index'),
+    url(r'^teacher$', 'teacher_view'),
+    url(r'^teacher/add$', 'teacher_add'),
+    url(r'^project$', 'project_add'),
+    url(r'^expense$', 'expense_add'),
+    url(r'^record$', 'expense_view'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block content%}
+    <div id="home"></div>
+    <div class="content_box_content">            
+        {% for department in deparments %}
+            <table class="table">
+                <thead>
+                    <h3>{{ department['name'] }}</h3>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>姓名</th>
+                        <th>职称</th>
+                        <th>系主任</th>
+                    </tr>
+                    {% for teacher in department['teachers'] %}
+                    <tr {% if (forloop.counter % 2 == 1) %}class='alt'{% endif %}>
+                        <td>{{ teacher.name }}</td>
+                        <td>{{ teacher.title }}</td>
+                        <td>
+                            {% if teacher.is_dean %}
+                                是 
+                            {% else %}
+                                否
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+        <div class="cleaner"></div>
+    </div> <!-- end of content box content -->
+{% endblock %}
