@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="home"></div>
+<div class="content_box_content">
+        <form class="uniform" action="/project/add" method="POST">
+        <li>
+                <label>教师</label>
+                <input type="text" name="teachers"></input>
+        </li>
+        <li>
+                <label>项目名称</label>
+                <input type="text" name="name"></input>
+        </li>
+        <li>
+                <label>项目类型</label>
+                <select type="text" name="project_type">
+                <option value="111">111
+                <option value="222">222
+                </select>
+        </li>
+        <li>
+                <label>起始时间</label>
+                <input type="text" id="datepicker" class="hasDatepicker" name="created_at"></input>
+        </li>
+        <li>
+                <label>结束时间</label>
+                <input type="text" id="datapicker" class="hasDatepicker" name="ended_at"></input>
+        </li>
+        <li>
+                <input type="SUBMIT" name="submit" value="提交"></input>
+                
+        </li>
+        </form>
+{% endblock %}
+~              
