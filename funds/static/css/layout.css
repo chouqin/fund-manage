@@ -40,6 +40,8 @@ em { color: #000; font-weight: bold }
 a, a:link, a:visited { color: #ea6f0b; font-weight: 700; text-decoration: none; font-size: 11px }
 a:hover { text-decoration: underline; }
 
+li {list-style: none;}
+button {background-color: #D8EEFF;}
 /* @end */
 
 
@@ -75,7 +77,7 @@ h6 { font-size: 14px; margin: 0 0 5px; padding: 0; }
 #templatemo_menu { clear: both; width: 780px; height: 40px; padding: 0 10px; }
 #templatemo_menu ul { padding: 0; margin: 0; list-style: none }
 #templatemo_menu ul li { float: left; display: block; width: 118px;
- padding-right: 2px; height: 40px; padding: 0; margin: 0; display: inline; background: url(../images/enu_divider.jpg) no-repeat right center }
+ padding-right: 2px; height: 40px; padding: 0; margin: 0; display: inline; background: url(../images/menu_divider.jpg) no-repeat right center }
  #templatemo_menu .last { background: none }
 #templatemo_menu ul li a {
 	display: block;
@@ -126,7 +128,7 @@ h6 { font-size: 14px; margin: 0 0 5px; padding: 0; }
 	padding: 20px;
 	text-align: center;
 	color: #e5efc8;
-	background: url(../images/templatemo_footer.jpg) center top no-repeat
+	/*background: url(../images/footer.jpg) center top no-repeat*/
 }
 
 #templatemo_footer a {
