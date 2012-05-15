@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="home"></div>
+<div class="content_box_content">
+	<form class="uniform" action="/project/add" method="POST">
+	<li>
+		<label>教师</label>
+		<input type="text" name="teachers" value="{{teachers}}"></input>
+	</li>
+	<li>
+		<label>项目名称</label>
+		<input type="text" name="name" value="{{name}}"></input>
+	</li>
+	<li>
+		<label>项目类型</label>
+		<input type="text" name="project_type" value={{projectType.name}}></input>
+	</li>
+	<>
+	</form>
+{% endblock %}
