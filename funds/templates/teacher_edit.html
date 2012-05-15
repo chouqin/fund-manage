@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block content%}
+    <div id="home"></div>
+    <div class="content_box_content">            
+        <form class="uniform" action="/teacher/edit/{{ teacher.id }}" method="POST">
+            <ul>
+                <li>
+                <label>所在系:</label>
+                    <select name="department">
+                        {% for department in departments %}
+                        <option value="{{ deparment.id }}" {% if department.id == teacher.deparment %}selected="selected"{% endif %}>
+                            {{ deparment.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    </li>
+                    <li><label>姓名:</label><input type="text" name="name" value="{{ teacher.name }}"/></li>
+                    <li><label>职称:</label><input type="text" name="title" value="{{ teacher.title }}"/></li>
+                    <li><label>是否是系主任:</label><input type="checkbox" name="is_dean" {% if teacher.is_deand  %}checked="checked"{% endif %}/></li>
+                    <!--<li><input type="hidden" name="id" value="{{ teacher.id }}"></li>-->
+                    <li><input type="submit"/><input type="reset"/></li>
+            </ul>
+        </form>
+    <div class="cleaner"></div>
+    </div> <!-- end of content box content -->
+{% endblock %}
