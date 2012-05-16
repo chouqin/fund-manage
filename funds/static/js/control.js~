@@ -1,0 +1,5 @@
+$('document').ready(function(){
+    $('input, textarea, select').uniform();
+    $("#date").datepicker({ showOn:'button' , buttonText: "select"});	
+
+});
