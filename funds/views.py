@@ -69,8 +69,7 @@ def project_view(request):
 	project['project'] = projectInList
 	project['teachers'] = projectInList.teachers.all()
 	projects.append(project)
-   # return HttpResponse(projects) 
-    return render_to_response('project_view.html',{'projects':projects}) 
+    return render_to_response('project_view_for_test.html',{'projects':projects}) 
    # return HttpResponse(projectList[0].ended_at)
 
 def project_add(request):
