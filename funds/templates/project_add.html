@@ -2,10 +2,12 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
-        <form class="uniform" action="/project/add" method="POST">
+        <form class="uniform" action="/project/add" method="POST" id="project_add_form">
+        {% csrf_token %}
         <li>
                 <label>教师</label>
-                <input type="text" name="teachers"></input>
+                <input class="teacher" type="text" name="teachers"></input>
+                <button id="addteacher">添加教师</button>
         </li>
         <li>
                 <label>项目名称</label>
@@ -31,5 +33,7 @@
                 
         </li>
         </form>
+        <div class="cleaner"><br/></div>
+</div>
 {% endblock %}
 ~              

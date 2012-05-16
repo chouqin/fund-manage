@@ -1,9 +1,11 @@
 # Create your views here.
 #coding=utf-8
-from django.http import HttpResponse
+#from django.http import HttpResponse
 from django.shortcuts import render_to_response
 #from funds.models import Teacher
 from funds.models import Department
+#from django.views.decorators.csrf import csrf_exempt
+#@csrf_exempt
 
 def index(request):
     return render_to_response('index.html')
@@ -26,8 +28,10 @@ def teacher_add(request):
     else:
         #departments = []
         departments = Department.objects.all()
-        return HttpResponse(departments)
-        #return render_to_response('teacher_add.html', {'departments': departments})
+        #dts = [{'name': dt.name, 'id': dt.id} for dt in departments]
+        #print departments
+        #return HttpResponse(departments)
+        return render_to_response('teacher_add.html', {'departments': departments})
 
 def teacher_edit(request, teacher_id):
     if request.method == 'POST':
@@ -36,8 +40,9 @@ def teacher_edit(request, teacher_id):
     else:
         #departments = []
         departments = Department.objects.all()
+        dts = [{'name': dt.name, 'id': dt.id} for dt in departments]
         teacher = 0
-        return render_to_response('teacher_edit.html', {'departments': departments, teacher: teacher})
+        return render_to_response('teacher_edit.html', {'departments': dts, teacher: teacher})
 
 def teacher_delete(request):
     return render_to_response('index.html')
@@ -49,7 +54,7 @@ def project_view(request):
     return render_to_response('index.html')
 
 def project_add(request):
-    return render_to_response('index.html')
+    return render_to_response('project_add.html')
 
 def project_edit(request):
     return render_to_response('index.html')
