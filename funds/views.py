@@ -46,7 +46,7 @@ def project_view(request):
     return render_to_response('index.html')
 
 def project_add(request):
-    return render_to_response('index.html')
+    return render_to_response('project_add.html')
 
 def project_edit(request):
     return render_to_response('index.html')

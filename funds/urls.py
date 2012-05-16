@@ -17,6 +17,7 @@ urlpatterns = patterns('funds.views',
     url(r'^teacher/add$', 'teacher_add'),
     url(r'^teacher/add/(?P<teacher_id>\d+)$', 'teacher_edit'),
     url(r'^project$', 'project_add'),
+    url(r'^project$/add', 'project_add'),
     url(r'^expense$', 'expense_add'),
     url(r'^record$', 'expense_view'),
 )
