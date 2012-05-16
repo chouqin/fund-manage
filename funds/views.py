@@ -2,16 +2,13 @@
 #coding=utf-8
 #from django.http import HttpResponse
 from django.shortcuts import render_to_response
-<<<<<<< HEAD
 #from funds.models import Teacher
 from funds.models import Department
 #from django.views.decorators.csrf import csrf_exempt
 #@csrf_exempt
-=======
-from funds.models import Teacher 
-from funds.models import Department 
+from funds.models import Teacher
+from funds.models import Department
 from django.http import HttpResponseRedirect
->>>>>>> 70fa0b0642017c376ebc3eace58b7e77fb441ac6
 
 def index(request):
     return render_to_response('index.html')
@@ -29,23 +26,20 @@ def teacher_view(request):
 
 def teacher_add(request):
     if request.method == 'POST':
-	teacher_name = request.POST['name']
-	teacher_title = request.POST['title']
-	teacher_isdean = request.POST['is_dean'] == 'on' ? 1 : 0
-	teacher_department = request.POST['department']
-	Teacher.objects.creaet(name=teacher_name , title=teacher_title , is_dean=teacher_isdean,department=teacher_department)
-	#return HttpResponseRedirect('/teacher/')	
-  	return HttpResponse(request.POST)
+        pass
+        #teacher_name = request.POST['name']
+        #teacher_title = request.POST['title']
+        #teacher_isdean = request.POST['is_dean']
+        #teacher_department = request.POST['department']
+        #Teacher.objects.creaet(name=teacher_name , title=teacher_title , is_dean=teacher_isdean,department=teacher_department)
+	#return HttpResponseRedirect('/teacher/')
+        #return HttpResponse(teacher)
     else:
-<<<<<<< HEAD
         #departments = []
         departments = Department.objects.all()
         #dts = [{'name': dt.name, 'id': dt.id} for dt in departments]
         #print departments
         #return HttpResponse(departments)
-=======
-        departments = Department.objects.all()
->>>>>>> 70fa0b0642017c376ebc3eace58b7e77fb441ac6
         return render_to_response('teacher_add.html', {'departments': departments})
 
 def teacher_edit(request, teacher_id):
