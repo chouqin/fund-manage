@@ -62,8 +62,15 @@ def teacher_search(request):
     return render_to_response('index.html')
 
 def project_view(request):
-    projectList = Project.objects.order_by("created_at") 
-    return render_to_response('index.html')
+    projectList = Project.objects.order_by("created_at")
+    projects = []
+    for projectInList in projectList:
+	project = {}
+	project['project'] = projectInList
+	project['teachers'] = projectInList.teachers.all()
+	projects.append(project)
+   # return HttpResponse(projects) 
+    return render_to_response('project_view.html',{'projects':projects}) 
    # return HttpResponse(projectList[0].ended_at)
 
 def project_add(request):
