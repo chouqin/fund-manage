@@ -3,12 +3,13 @@
     <div id="home"></div>
     <div class="content_box_content">            
         <form class="uniform" action="/teacher/add" method="POST">
+	{% csrf_token %}
             <ul>
                 <li>
                 <label>所在系:</label>
                     <select name="department">
                         {% for department in departments %}
-                        <option value="{{ deparment.id }}">{{ deparment.name }}</option>
+                        <option value="{{ deparment.id }}">{{ department.name }}</option>
                         {% endfor %}
                     </select>
                     </li>

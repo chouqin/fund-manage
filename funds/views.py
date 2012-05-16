@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from funds.models import Teacher 
 from funds.models import Department 
+from django.http import HttpResponseRedirect
 
 def index(request):
     return render_to_response('index.html')
@@ -21,10 +22,9 @@ def teacher_view(request):
 
 def teacher_add(request):
     if request.method == 'POST':
-        #save teacher and redirect to teacher_view
-        pass
+	return HttpResponseRedirect('/teacher/')	
     else:
-        departments = []
+        departments = Department.objects.all()
         return render_to_response('teacher_add.html', {'departments': departments})
 
 def teacher_edit(request, teacher_id):
