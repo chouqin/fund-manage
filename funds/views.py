@@ -39,8 +39,16 @@ def teacher_add(request):
 
 def teacher_edit(request, teacher_id):
     if request.method == 'POST':
-        #save teacher and redirect to teacher_view
-        pass
+	teacherName = request.POST['name']
+	teacherTitle = request.POST['title']
+	if 'is_dean' in request.POST:
+	    teacherIsDean = True
+	else:
+	    teacherIsDean = False
+	teacherDepartment = Department.objects.get(id=request.POST['department'])
+	Teacher.objects.filter(id=teacher_id).update(name = teacherName , title = teacherTitle ,is_dean = teacherIsDean ,
+		 department = teacherDepartment)
+	return HttpResponseRedirect('/teacher')
     else:
         departments = []
 	departments = Department.objects.all()
@@ -54,7 +62,9 @@ def teacher_search(request):
     return render_to_response('index.html')
 
 def project_view(request):
+    projectList = Project.objects.order_by("created_at") 
     return render_to_response('index.html')
+   # return HttpResponse(projectList[0].ended_at)
 
 def project_add(request):
     if request.method == 'POST':
