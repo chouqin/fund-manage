@@ -43,8 +43,9 @@ def teacher_edit(request, teacher_id):
         pass
     else:
         departments = []
-        teacher = 0
-        return render_to_response('teacher_edit.html', {'departments': departments, teacher: teacher})
+	departments = Department.objects.all()
+        teacher = Teacher.objects.get(id=teacher_id)
+        return render_to_response('teacher_edit.html', {'departments': departments, 'teacher': teacher})
 
 def teacher_delete(request):
     return render_to_response('index.html')
