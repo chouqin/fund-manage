@@ -23,11 +23,12 @@ def teacher_view(request):
 def teacher_add(request):
     if request.method == 'POST':
 	teacher_name = request.POST['name']
-	teacher_title = request.POST['titile']
-	teacher_isdean = request.POST['is_dean'] ? 1 : 0
+	teacher_title = request.POST['title']
+	teacher_isdean = request.POST['is_dean'] == 'on' ? 1 : 0
 	teacher_department = request.POST['department']
 	Teacher.objects.creaet(name=teacher_name , title=teacher_title , is_dean=teacher_isdean,department=teacher_department)
-	return HttpResponseRedirect('/teacher/')	
+	#return HttpResponseRedirect('/teacher/')	
+  	return HttpResponse(request.POST)
     else:
         departments = Department.objects.all()
         return render_to_response('teacher_add.html', {'departments': departments})
