@@ -55,8 +55,12 @@ def teacher_edit(request, teacher_id):
         teacher = Teacher.objects.get(id=teacher_id)
         return render_to_response('teacher_edit.html', {'departments': departments, 'teacher': teacher})
 
-def teacher_delete(request):
-    return render_to_response('index.html')
+def teacher_delete(request,teacher_id):
+    teacherToDelete = Teacher.objects.get(id = teacher_id)
+    teacherToDelete.project_set.remove(teacherToDelete)
+    teacherToDelete.delete()
+    #return render_to_response('index.html')
+    return HttpResponseRedirect('/teacher')
 
 def teacher_search(request):
     return render_to_response('index.html')
