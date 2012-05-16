@@ -8,8 +8,8 @@
                 <label>所在系:</label>
                     <select name="department">
                         {% for department in departments %}
-                        <option value="{{ deparment.id }}" {% if department.id == teacher.deparment %}selected="selected"{% endif %}>
-                            {{ deparment.name }}
+                        <option value="{{ department.id }}" {% if department.id == teacher.department_id %}selected="selected"{% endif %}>
+                            {{ department.name }}
                         </option>
                         {% endfor %}
                     </select>

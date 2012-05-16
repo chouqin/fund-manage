@@ -1,10 +1,9 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 {% extends 'layout.html' %}
 {% block content%}
     <div id="home"></div>
     <div class="content_box_content"> 
         {% for department in departments %}
-            <table class="table">
+            <table class="tables">
                 <thead>
                     <h3>{{ department.name }}</h3>
                 </thead>
@@ -15,7 +14,7 @@
                         <th>系主任</th>
                     </tr>
                     {% for teacher in department.teachers %}
-			<td>{{ teacher.name }}</td>
+                        <td>{{ teacher.name }}</td>
                         <td>{{ teacher.title }}</td>
                         <td>
                             {% if teacher.is_dean %}
@@ -28,7 +27,8 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <div class="cleaner"><br/></div>
+
         {% endfor %}
-        <div class="cleaner"></div>
     </div> <!-- end of content box content -->
 {% endblock %}
