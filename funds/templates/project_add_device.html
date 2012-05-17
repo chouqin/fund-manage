@@ -1,0 +1,52 @@
+{% extend "layout.html" %}
+{% block content %}
+<div class="content_box_content">
+	<form class="uniform" action="/project/add/device" method="POST">
+	<li align="center" > 添加设备 
+	<li>
+		<label>设备名称</label>
+		<input size=10 type="text" name="name" />
+	</li>	
+	<li>
+		<label> 规格 </label>
+		<input size=10 type="text" name="specification"/>
+	</li>
+	<li>
+		<label> 制造商 </label>
+		<input size=10 type="text" name="maker"/>
+	</li>
+	<li>
+		<label> 是否进口 </label>
+		<input type="checkbox" name="is_import"/>是
+	</li>
+	<li>
+		<label> 单价 </label>
+		<input type="text" name="price"/>
+	</li>
+	<li>
+		<label> 数量 </label>
+		<input size=5 type="text" name="amount"/>
+	</li>
+	<li>
+		<label> 安放位置 </label>
+		<input type="text" name="position"/>
+	</li>
+	<li>
+		<label> 用途 </label>
+		<input type="text" name="usage"/>
+	</li>
+	<li>
+		<label> 时间 </label>
+		<select type="text" name="year">
+		{% for year in years%}
+			<option value="{{year}}"></option>
+		{% endfor %}	
+	</li>
+	<li>
+		<button type="submit" name="submit">提交设备</button>
+	</li> 
+	</form>
+
+
+
+{% endblock %}

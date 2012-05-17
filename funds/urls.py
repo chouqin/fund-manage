@@ -15,10 +15,17 @@ urlpatterns = patterns('funds.views',
     url(r'^home$', 'index'),
     url(r'^teacher$', 'teacher_view'),
     url(r'^teacher/add$', 'teacher_add'),
+#<<<<<<< HEAD
     url(r'^teacher/edit/(?P<teacher_id>\d+)$', 'teacher_edit'),
     url(r'^teacher/delete/(?P<teacher_id>\d+)$', 'teacher_delete'),
     url(r'^project$', 'project_view'),
     url(r'^project/add$', 'project_add'),
+#=======
+    #url(r'^teacher/add/(?P<teacher_id>\d+)$', 'teacher_edit'),
+    #url(r'^teacher/search/(?P<key>.+)$', 'teacher_search'),
+    #url(r'^project/add$', 'project_add'),
+    #url(r'^project$', 'project_view'),
+#>>>>>>> 330c5a0d2cb1911d6966f56d77de18a446388b77
     url(r'^expense$', 'expense_add'),
     url(r'^record$', 'expense_view'),
 )

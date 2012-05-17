@@ -7,6 +7,7 @@ from funds.models import Teacher
 from funds.models import Department
 from funds.models import ProjectType
 from funds.models import Project
+import json
 
 def index(request):
     return render_to_response('index.html')
@@ -29,9 +30,15 @@ def teacher_add(request):
         if 'is_dean' in request.POST.keys():
             teacher_isdean = False
         else:
-             teacher_isdean = True
+#<<<<<<< HEAD
+             #teacher_isdean = True
+        #teacher_department = Department.objects.get(id=request.POST['department'])
+        #Teacher.objects.create(name=teacher_name , title=teacher_title ,is_dean=teacher_isdean , department=teacher_department )
+#=======
+            teacher_isdean = True
         teacher_department = Department.objects.get(id=request.POST['department'])
-        Teacher.objects.create(name=teacher_name , title=teacher_title ,is_dean=teacher_isdean , department=teacher_department )
+        Teacher.objects.create(name=teacher_name , title=teacher_title , is_dean=teacher_isdean , department=teacher_department )
+#>>>>>>> 330c5a0d2cb1911d6966f56d77de18a446388b77
         return HttpResponseRedirect('/teacher')
     else:
         departments = Department.objects.all()
@@ -58,8 +65,23 @@ def teacher_edit(request, teacher_id):
 def teacher_delete(request):
     return render_to_response('index.html')
 
-def teacher_search(request):
-    return render_to_response('index.html')
+def teacher_search(request, key):
+    print type(key.encode('utf8'))
+    teachers = Teacher.objects.filter(name__startswith=key.encode('utf8'))
+    print teachers
+    result = []
+    for teacher in teachers:
+        #print type(teacher.name)
+        label = teacher.name + ' ' + teacher.title
+        #label = teacher.name.encode('utf8') + ' ' + teacher.title.encode('utf8')
+        #label = teacher.name
+        print label
+        result.append({'label': label, 'value': teacher.id})
+    #return json.dumps(result)
+    #return result
+    #print result
+    return HttpResponse(json.dumps(result), mimetype='application/json')
+    #return HttpResponse(result, mimetype='application/json')
 
 def project_view(request):
     projectList = Project.objects.order_by("created_at")
@@ -74,6 +96,10 @@ def project_view(request):
 
 def project_add(request):
     if request.method == 'POST':
+#<<<<<<< HEAD
+#=======
+        ##save teacher and redirect to teacher_view
+#>>>>>>> 330c5a0d2cb1911d6966f56d77de18a446388b77
         teacherList = request.POST.getlist('teachers')
         projectName = request.POST['name']
         projectType = ProjectType.objects.get(id=request.POST['project_type'])
@@ -83,7 +109,11 @@ def project_add(request):
         for teacher in teacherList:
             teacherInstance = Teacher.objects.all().get(name=teacher)
             teacher_list.append(teacherInstance)
-            addProject = Project.objects.create(name=projectName , project_type = projectType, created_at = startTime,ended_at=endTime)
+#<<<<<<< HEAD
+            #addProject = Project.objects.create(name=projectName , project_type = projectType, created_at = startTime,ended_at=endTime)
+#=======
+        addProject = Project.objects.create(name=projectName , project_type = projectType, created_at = startTime,ended_at=endTime)
+#>>>>>>> 330c5a0d2cb1911d6966f56d77de18a446388b77
         for teacher in teacher_list:
             addProject.teachers.add(teacher)
         return HttpResponseRedirect('/project')

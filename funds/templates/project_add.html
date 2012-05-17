@@ -2,6 +2,7 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
+<<<<<<< HEAD
         <form class="uniform" action="/project/add" method="POST">
 	<table>
         <tr>
@@ -39,5 +40,43 @@
         </tr>
 </table>
 	</form>
+=======
+        <form class="uniform" action="/project/add" method="POST" id="project_add_form">
+        {% csrf_token %}
+        <li>
+                <label>教师</label>
+                <input class="teacher" type="text"></input>
+                <input class="teache_id" type="hidden" name="teachers"></input>
+                <button id="addteacher">添加教师</button>
+        </li>
+        <li>
+                <label>项目名称</label>
+                <input type="text" name="name"></input>
+        </li>
+        <li>
+                <label>项目类型</label>
+                <select type="text" name="project_type">
+                    {% for type in project_types %}
+                        <option value="{{ type.id }}">{{ type.name }}</option>
+                    {% endfor %}
+                </select>
+        </li>
+        <li>
+                <label>起始时间</label>
+                <input id="cdate" type="text" class="datepicker" name="created_at"></input>
+        </li>
+        <li>
+                <label>结束时间</label>
+                <input  id="edate" type="text" class="datepicker" name="ended_at"></input>
+                </li>
+        <li>
+            <label>设备预算</label>
+        </li>
+        <li><button type="submit">下一步</button><button type="reset">重置</button></li>
+        </form>
+        <div class="cleaner"><br/></div>
+</div>
+
+>>>>>>> 330c5a0d2cb1911d6966f56d77de18a446388b77
 {% endblock %}
 ~              
