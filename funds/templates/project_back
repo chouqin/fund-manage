@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="home"></div>
+<div class="content_box_content">
+    <form class="uniform" action="/project/add/device/{{project_id}}" method="POST" id="project_add_form">
+        <table class="table">
+        <li><th>添加设备</th></li>
+        <li>
+            <label>设备名称</label>
+            <input size=20 type="text" name="name" />
+        </li>	
+        <li>
+            <label >规格 </label></td>
+            <input size=20 type="text" name="specification"/>
+        </li>
+        <li>
+            <label>制造商 </label>
+            <input size=20 type="text" name="maker"/>
+        </li>
+        <li>
+                <label>进口 </label>
+                <input type="checkbox" name="is_import"/>
+        </li>
+        <li>
+            <label>单价 </label>
+            <input type="text" name="price"/>
+        </li>
+        <li>
+            <label>数量 </label>
+            <input size=10 type="text" name="amount"/>
+        </li>
+        <li>
+            <label> 安放位置 </label>
+            <input type="text" name="position"/>
+        </li>
+        <li>
+            <label>用途 </label>
+            <input type="text" name="usage"/>
+        </li>
+        <li>
+            <label>时间 </label>
+            <td colspan=1><div display="inline">
+                <select type="text" name="year"  theme="simple">
+                {% for year in years%}
+                <option value="{{year}}">{{year}}</option>
+                {% endfor %}
+                </select></div>
+            </td>
+        </li>
+        </table>
+        <input id="submit_type" type="hidden" name="submit_type"></input>
+        <li><button class="project-add-device">继续添加设备费</button><button class="project-add-business">继续添加业务费</button><button class="project-add">直接保存</button></li>
+    </form>
+    <div class="cleaner"><br/></div>
+</div>
+
+{% endblock %}

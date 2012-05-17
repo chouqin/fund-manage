@@ -8,6 +8,7 @@ from funds.models import Department
 from funds.models import ProjectType
 from funds.models import Project
 import json
+from funds.models import Device
 from datetime import datetime
 
 def index(request):
@@ -116,7 +117,31 @@ def project_add(request):
 def project_add_device(request, project_id):
     if request.method == "POST":
         name = request.POST['name']
-
+        specification = request.POST['specification']
+        maker = request.POST['maker']
+        if 'is_import' in request.POST.keys():
+            is_import = True
+        else:
+            is_import = False
+        price = request.POST['price']
+        amount = request.POST['amount']
+        position = request.POST['position']
+        remain_amount = amount
+        usage = request.POST['usage']
+        month_to_add = "-1-1 00:00"
+        year = request.POST['year']
+        year += month_to_add
+        project = get_object_or_404(Project, pk=project_id)
+        Device.objects.create(name=name,specification = specification ,maker = maker , is_import = is_import , price = price ,
+                amount = amount ,position = position ,remain_amount = remain_amount , usage = usage , year = year,project = project)
+        submit_type = request.POST['submit_type']
+        if submit_type == 'save':
+            return HttpResponseRedirect('/project/add')
+        else:
+            if submit_type == 'add_device':
+                return HttpResponseRedirect('/project/add/device/' + str(project_id))
+            else:
+                return HttpResponseRedirect('/project/add/business/' + str(project_id))
     else:
         currentTime = time.localtime()
         years = range(-6,6)
