@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<div id="home"></div>
 <div class="content_box_content">
 	<form  action="/project/add/device" method="POST">
 	<table class="table">
@@ -34,12 +35,11 @@
 		<input type="text" name="usage"/>
 	</li>
 	<li>
-		<label>时间 </label>
+		<label>时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
 		<select type="text" name="year"  theme="simple">
-		{#% for year in years%#}
-			<option value="2012}">2012</option>
-<option value="2012}">2012</option><option value="2012}">2012</option><option value="2012}">2012</option>
-		{#% endfor %#}
+		{% for year in years%}
+			<option value="{{year}}">{{year}}</option>
+		{% endfor %}
 		</select>
 		
 	</li>
@@ -48,21 +48,12 @@
 		<input type="checkbox" name="is_import"/>
 		
 	</li>
-	<li>
-		<button name="submit_add" onclick="subAddDev()">继续添加</button>
-		<button name="submit" onclick="subDev()">完成添加</button>
-		<script type="text/javascript">
-			function subDev(){
-				document.form.action="";
-				document.form.submit();
-			}
-			function subAddDev(){
-				document.form.action="";
-				document.form.submit();
-			}
-		</script>
+	<input id="submit_type" type="hidden" name="submit_type"></input>
+        <li>
+		<button class="project-add-device">继续添加设备费</button>
+		<button class="project-add-business">继续添加业务费</button>
+		<button class="project-add">直接保存</button></li>
 	</li>
-	</table>
 	</form>
 
 	</div>

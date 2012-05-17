@@ -33,16 +33,8 @@ urlpatterns = patterns('funds.views',
     url(r'^project$', 'project_index'),
     url(r'^project/(?P<project_id>\d+)$', 'project_view'),
     url(r'^project/add$', 'project_add'),
-<<<<<<< HEAD
     url(r'^project/add/device/(?P<project_id>.+)$', 'project_add_device'),
     url(r'^project$', 'project_view'),
-=======
-    url(r'^project/add/device/(?P<project_id>\d+)$', 'project_add_device'),
-<<<<<<< HEAD
->>>>>>> dbb09a6f48a3c66585860cb8f7cf8a9bd11544bc
-=======
-#>>>>>>> dbb09a6f48a3c66585860cb8f7cf8a9bd11544bc
->>>>>>> 52ed0c25aba39bb64344d74299fba74a427e042d
     url(r'^expense$', 'expense_add'),
     url(r'^record$', 'expense_view'),
 

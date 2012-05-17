@@ -28,7 +28,7 @@ def teacher_view(request):
 def teacher_add(request):
     if request.method == 'POST':
         teacher_name = request.POST['name']
-        teacjjher_title = request.POST['title']
+        teacher_title = request.POST['title']
         if 'is_dean' in request.POST.keys():
             teacher_isdean = True
         else:
@@ -132,7 +132,6 @@ def project_add(request):
         return render_to_response('project_add.html',{'project_types':projectTypes})
 
 def project_add_device(request, project_id):
-<<<<<<< HEAD
 	if request.method == 'POST':
 		device_name = request.POST['name']
 		device_specification = request.POST['specification']
@@ -149,15 +148,19 @@ def project_add_device(request, project_id):
 		device_year = request.POST['year']
 		device_project = Project.objects.get(id = project_id)
 		Device.objects.create( name = device_name, specification = device_specification, maker = device_maker, is_import = device_isImport, price = device_price, amount = device.amount, remain_amount = device_remain_amount, position = device_position, usage = device_usage, year = device_year, project = device_project)
-		return render_to_response('project_add_device.html')
+		submit_type = request.POST['submit_type']
+		if submit_type == 'save':
+            		return HttpResponseRedirect('/project')
+        	else:
+            		if submit_type == 'add_device':
+                		return HttpResponseRedirect('/project/add/device/' + str(device_project.id))
+            		else:
+                		return HttpResponseRedirect('/project/add/business/' + str(device_project.id))
 	else:
-		return render_to_response('project_add_device.html')
-
-=======
-    if request.method == "POST":
-        pass
-    else:
-        return render_to_response('project_add_device.html', {'project_id', project_id})
+		currentTime = time.localtime()
+        years = range(-4,6)
+        years = [ year + currentTime.tm_year for year in years ]
+        return render_to_response('project_add_device.html',{'years':years,})
 
 def project_view(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
@@ -165,7 +168,6 @@ def project_view(request, project_id):
     devices = project.device_set().all()
     businesses = project.business_set().all()
     return render_to_response('project_view.html', {'project': project, 'devices': devices, 'business': businesses})
->>>>>>> dbb09a6f48a3c66585860cb8f7cf8a9bd11544bc
 
 def project_edit(request):
     return render_to_response('index.html')
@@ -180,16 +182,6 @@ def expense_view(request):
     return render_to_response('index.html')
 def expense_add(request):
     return render_to_response('index.html')
-
-def project_device_add(request):
-    if request.method == 'POST':
-        pass
-    else:
-        currentTime = time.localtime()
-        years = range(-4,6)
-        years = [ year + currentTime.tm_year for year in years ]
-        return render_to_response('project_device_add.html',{'years':years,})
-
 
 
 def record_view_all(request):
