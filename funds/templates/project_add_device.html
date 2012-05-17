@@ -2,9 +2,7 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
-<<<<<<< HEAD
 	<form  action="/project/add/device" method="POST">
-	<table class="table">
 	<h3>添加设备</h3>
 	<li>
 		<label>设备名称</label>
@@ -39,7 +37,7 @@
 		<label>时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
 		<select type="text" name="year"  theme="simple">
 		{% for year in years%}
-<option value="{{year}}">{{year}}</option>
+			<option value="{{year}}">{{year}}</option>
 		{% endfor %}
 		</select>
 		
@@ -49,80 +47,9 @@
 		<input type="checkbox" name="is_import"/>
 		
 	</li>
-	<li>
-		<button name="submit_add" onclick="subAddDev()">继续添加</button>
-		<button name="submit" onclick="subDev()">完成添加</button>
-		<script type="text/javascript">
-			function subDev(){
-				document.form.action="";
-				document.form.submit();
-			}
-			function subAddDev(){
-				document.form.action="";
-				document.form.submit();
-			}
-		</script>
-	</li>
-	</table>
+	<input id="submit_type" type="hidden" name="submit_type"></input>
+        <li><button class="project-add-device">继续添加设备费</button><button class="project-add-business">继续添加业务费</button><button class="project-add">直接保存</button></li>
 	</form>
 
 	</div>
-=======
-    <form class="uniform" action="/project/add/device/{{ project_id }}" method="POST" id="project_add_form">
-        <table class="table">
-        <tr><th>添加设备</th></tr>
-        <tr>
-            <td><label>设备名称</label></td>
-            <td><input size=20 type="text" name="name" /></td>
-        </tr>	
-        <tr>
-            <td><label >规格 </label></td>
-            <td><input size=20 type="text" name="specification"/></td>
-        </tr>
-        <tr>
-            <td><label>制造商 </label></td>
-            <td><input size=20 type="text" name="maker"/></td>
-        </tr>
-        <tr>
-            <td colspan=2>
-                <label>进口 </label>
-                <input type="checkbox" name="is_import"/>
-            </td>
-        </tr>
-        <tr>
-            <td><label>单价 </label></td>
-            <td><input type="text" name="price"/></td>
-        </tr>
-        <tr>
-            <td><label>数量 </label></td>
-            <td><input size=10 type="text" name="amount"/></td>
-        </tr>
-        <tr>
-            <td><label> 安放位置 </label></td>
-            <td><input type="text" name="position"/></td>
-        </tr>
-        <tr>
-            <td><label>用途 </label></td>
-            <td><input type="text" name="usage"/></td>
-        </tr>
-        <tr>
-            <td><label>时间 </label></td>
-            <td colspan=1><div display="inline">
-                <select type="text" name="year"  theme="simple">
-                {#% for year in years%#}
-                <option value="10">10</option>
-                <option value="20">20</option>	
-                <option value="40">40</option>
-                {#% endfor %#}
-                </select></div>
-            </td>
-        </tr>
-        </table>
-        <input id="submit_type" type="hidden" name="submit_type"></input>
-        <li><button class="project-add-device">继续添加设备费</button><button class="project-add-business">继续添加业务费</button><button class="project-add">直接保存</button></li>
-    </form>
-    <div class="cleaner"><br/></div>
-</div>
->>>>>>> dbb09a6f48a3c66585860cb8f7cf8a9bd11544bc
-
 {% endblock %}
