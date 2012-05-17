@@ -50,7 +50,7 @@ div.selector {
 div.selector span {
   background-position: right 0px;
   height: 32px;
-	line-height: 32px;
+    line-height: 32px;
 }
 
 div.selector select {
@@ -384,8 +384,9 @@ Not advised to edit stuff below this line
 /* Select */
 
  div.selector {
-	position: relative;
-	padding-left: 10px;
+    position: relative;
+    padding-left: 10px;
+     /*display: inline-block;*/
 }
 
  div.selector span {

@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content_box_content">
+	<form class="uniform" action="/project/add/device" method="POST">
+	<table class="table">
+	<tr><th>添加设备</th></tr>
+	<tr>
+		<td><label>设备名称</label></td>
+		<td><input size=20 type="text" name="name" /></td>
+	</tr>	
+	<tr>
+		<td><label >规格 </label></td>
+		<td><input size=20 type="text" name="specification"/></td>
+	</tr>
+	<tr>
+		<td><label>制造商 </label></td>
+		<td><input size=20 type="text" name="maker"/></td>
+	</tr>
+	<tr>
+		<td colspan=2>
+			<label>进口 </label>
+			<input type="checkbox" name="is_import"/>
+		</td>
+	</tr>
+	<tr>
+		<td><label>单价 </label></td>
+		<td><input type="text" name="price"/></td>
+	</tr>
+	<tr>
+		<td><label>数量 </label></td>
+		<td><input size=10 type="text" name="amount"/></td>
+	</tr>
+	<tr>
+		<td><label> 安放位置 </label></td>
+		<td><input type="text" name="position"/></td>
+	</tr>
+	<tr>
+		<td><label>用途 </label></td>
+		<td><input type="text" name="usage"/></td>
+	</tr>
+	<tr>
+		<td><label>时间 </label></td>
+		<td colspan=1><div display="inline">
+			<select type="text" name="year"  theme="simple">
+			{#% for year in years%#}
+			<option value="10">10</option>
+			<option value="20">20</option>	
+			<option value="40">40</option>
+			{#% endfor %#}
+			</select></div>
+		</td>
+	</tr>
+	<tr>
+		<td><button type="submit" name="submit">提交设备</button></td>
+	</tr>
+	</table>
+	</form>
+
+	</div>
+
+{% endblock %}
