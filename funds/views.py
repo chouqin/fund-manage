@@ -154,6 +154,9 @@ def project_view(request, project_id):
     businesses = project.business_set().all()
     return render_to_response('project_view.html', {'project': project, 'devices': devices, 'business': businesses})
 
+def project_add_business(request):
+    return render_to_reponse('index.html')
+
 def project_edit(request):
     return render_to_response('index.html')
 

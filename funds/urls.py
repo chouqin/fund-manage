@@ -33,10 +33,12 @@ urlpatterns = patterns('funds.views',
     url(r'^project$', 'project_index'),
     url(r'^project/(?P<project_id>\d+)$', 'project_view'),
     url(r'^project/add$', 'project_add'),
-    url(r'^project/add/device/(?P<project_id>\d+)$', 'project_add_device'),
-#>>>>>>> dbb09a6f48a3c66585860cb8f7cf8a9bd11544bc
+    url(r'^project/add/device/(?P<project_id>.+)$', 'project_add_device'),
+    url(r'^project/add/business/(?P<project_id>.+)$','project_add_business'),
+    url(r'^project$', 'project_view'),
     url(r'^expense$', 'expense_add'),
     url(r'^record$', 'expense_view'),
+
 )
 
 urlpatterns += staticfiles_urlpatterns()

@@ -1,5 +1,6 @@
 $('document').ready(function(){
-    $('input, textarea, select').uniform();
+
+    $('input, textarea').uniform();
     $('#cdate').datepicker();
     $('#edate').datepicker();
     $("#cdate").datepicker('option', $.datepicker.regional['zh-CN']);
