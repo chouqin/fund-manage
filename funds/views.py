@@ -1,5 +1,6 @@
 # Create your views here.
 #coding=utf-8
+import time
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -26,16 +27,16 @@ def teacher_view(request):
 def teacher_add(request):
     if request.method == 'POST':
         teacher_name = request.POST['name']
-        teacher_title = request.POST['title']
+        teacjjher_title = request.POST['title']
         if 'is_dean' in request.POST.keys():
-            teacher_isdean = False
+            teacher_isdean = True
         else:
 #<<<<<<< HEAD
              #teacher_isdean = True
         #teacher_department = Department.objects.get(id=request.POST['department'])
         #Teacher.objects.create(name=teacher_name , title=teacher_title ,is_dean=teacher_isdean , department=teacher_department )
 #=======
-            teacher_isdean = True
+            teacher_isdean = False
         teacher_department = Department.objects.get(id=request.POST['department'])
         Teacher.objects.create(name=teacher_name , title=teacher_title , is_dean=teacher_isdean , department=teacher_department )
 #>>>>>>> 330c5a0d2cb1911d6966f56d77de18a446388b77
@@ -132,7 +133,19 @@ def project_search(request):
 
 def expense_view(request):
     return render_to_response('index.html')
-def expense_add(request): return render_to_response('index.html')
+def expense_add(request):
+    return render_to_response('index.html')
+
+def project_device_add(request):
+    if request.method == 'POST':
+        pass
+    else:
+        currentTime = time.localtime()
+        years = range(-4,6)
+        years = [ year + currentTime.tm_year for year in years ]
+        return render_to_response('project_device_add.html',{'years':years,})
+
+
 
 def record_view_all(request):
     return render_to_response('index.html')
