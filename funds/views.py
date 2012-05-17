@@ -115,7 +115,8 @@ def project_add(request):
 
 def project_add_device(request, project_id):
     if request.method == "POST":
-    
+        name = request.POST['name']
+
     else:
         currentTime = time.localtime()
         years = range(-6,6)
