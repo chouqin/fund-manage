@@ -2,46 +2,7 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
-    <!--<<<<<<< HEAD-->
-    <!--<form class="uniform" action="/project/add" method="POST">-->
-        <!--<table>-->
-            <!--<tr>-->
-                <!--<td align="right"><label>教师</label></td>-->
-                <!--<td>-->
-                    <!--<input type="text" name="teachers" size=10/>-->
-                    <!--<div id="plus"></plus>-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td><label>项目名称</label></td>-->
-                    <!--<td><input type="text" name="name" size=20></input></td>-->
-                    <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td><label>项目类型</label></td>-->
-                    <!--<td>-->
-                        <!--<select type="text" name="project_type">-->
-                            <!--{% for projectType in project_types %}-->
-                            <!--<option value="{{projectType.id}}" >{{projectType.name}}</option>-->
-                            <!--{% endfor %}-->
-                            <!--</select>-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td><label>起始时间</label></td>-->
-                    <!--<td><input id="cdate" type="date" name="created_at" size=10/></td>-->
-                    <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td><label>结束时间</label></td>-->
-                    <!--<td><input id="edate" type="date" name="ended_at" size=10></input></td>-->
-                    <!--</tr>        -->
-                <!--<tr>-->
-                    <!--<td align="center" colspan=2><button type="submit" name="submit" >添加明细</input></td>-->
-                        <!-- -->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</form>-->
-            <!--=======-->
-        <form class="uniform" action="/project/add" method="POST" id="project_add_form">
+           <form class="uniform" action="/project/add" method="POST" id="project_add_form">
         {% csrf_token %}
         <li>
                 <label>教师</label>

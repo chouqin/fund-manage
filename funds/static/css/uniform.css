@@ -384,15 +384,9 @@ Not advised to edit stuff below this line
 /* Select */
 
  div.selector {
-<<<<<<< HEAD
 	position: relative;
 	padding-left: 10px;
 
-=======
-    position: relative;
-    padding-left: 10px;
-     /*display: inline-block;*/
->>>>>>> dbb09a6f48a3c66585860cb8f7cf8a9bd11544bc
 }
 
  div.selector span {
