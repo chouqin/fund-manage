@@ -2,7 +2,7 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
-	<form  action="/project/add/device" method="POST">
+	<form  action="/project/add" method="POST">
 	<h3>添加设备</h3>
 	<li>
 		<label>设备名称</label>
@@ -34,10 +34,10 @@
 		<input type="text" name="usage"/>
 	</li>
 	<li>
-		<label>时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		<label>年份&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
 		<select type="text" name="year"  theme="simple">
 		{% for year in years%}
-			<option value="{{year}}">{{year}}</option>
+			option value="{{year}}">{{year}}</option>
 		{% endfor %}
 		</select>
 		

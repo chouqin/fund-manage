@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="home"></div>
+<div class ="content_box_content">
+	<form action="/project/add/business" method="POST">
+	<h3>添加业务</h3>
+	<li>
+		<label>项目总额</label>
+		<input type="text" size=15 name="total"/>
+	</li>
+	<li>
+		<label>年份&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		<select type="text" name="year"  theme="simple">
+		{% for year in years%}
+			<option value="{{year}}">{{year}}</option>
+		{% endfor %}
+		</select>
+	</li>
+	<input class="submit_type" type="hidden" name="submit_type"></input>
+    <li>
+		<button class="project-add-device">继续添加设备费</button>
+		<button class="project-add-business">继续添加业务费</button>
+		<button class="project-add">直接保存</button>
+	</li>
+
+{% endblock %}
