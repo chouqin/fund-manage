@@ -18,9 +18,11 @@ urlpatterns = patterns('funds.views',
     url(r'^teacher/add/(?P<teacher_id>\d+)$', 'teacher_edit'),
     url(r'^teacher/search/(?P<key>.+)$', 'teacher_search'),
     url(r'^project/add$', 'project_add'),
+    url(r'^project/add/device/(?P<project_id>.+)$', 'project_add_device'),
     url(r'^project$', 'project_view'),
     url(r'^expense$', 'expense_add'),
     url(r'^record$', 'expense_view'),
+
 )
 
 urlpatterns += staticfiles_urlpatterns()

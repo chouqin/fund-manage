@@ -92,6 +92,28 @@ def project_add(request):
         projectTypes = ProjectType.objects.all()
         return render_to_response('project_add.html',{'project_types':projectTypes})
 
+def project_add_device(request, project_id):
+	if request.method == 'POST':
+		device_name = request.POST['name']
+		device_specification = request.POST['specification']
+		device_maker = request.POST['maker']
+		if 'is_import' in request.POST.keys():
+			device_isImport = True
+		else:
+			device_isImport = False
+		device_price = request.POST['price']
+		device_amount = request.POST['amount']
+		device_remain_amount = device_amount
+		device_position = request.POST['position']
+		device_usage = request.POST['usage']
+		device_year = request.POST['year']
+		device_project = Project.objects.get(id = project_id)
+		Device.objects.create( name = device_name, specification = device_specification, maker = device_maker, is_import = device_isImport, price = device_price, amount = device.amount, remain_amount = device_remain_amount, position = device_position, usage = device_usage, year = device_year, project = device_project)
+		return render_to_response('project_add_device.html')
+	else:
+		return render_to_response('project_add_device.html')
+
+
 def project_edit(request):
     return render_to_response('index.html')
 

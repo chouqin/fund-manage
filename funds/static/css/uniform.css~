@@ -386,6 +386,7 @@ Not advised to edit stuff below this line
  div.selector {
 	position: relative;
 	padding-left: 10px;
+display:inline;
 
 }
 
