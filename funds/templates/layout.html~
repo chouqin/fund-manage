@@ -2,22 +2,15 @@
 <html >
     <head>    
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>电院经费管理系统</title>
+        <title>Shady Acres - Brisbane Boarding Kennels</title>
         <meta name="description" content="Luxurious and affordable boarding kennels and cattery in Sheldon, Brisbane. Extra care and attention for your best friend. Call us to make a booking today.">
         <link rel="stylesheet" type="text/css" href="/static/css/layout.css">
         <link rel="stylesheet" type="text/css" href="/static/css/uniform.css">
-
-       <link rel="stylesheet" type="text/css" href="/static/css/ui.theme.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/jquery-ui.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/ui.theme.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/jquery.ui.all.css">
-        <script src="/static/js/jquery-1.7.2.js" ></script>
-        <script src="/static/js/jquery.uniform.min.js" ></script>
-        <script src="/static/js/jquery-ui.min.js" ></script>
-        <script src="/static/js/jquery.ui.core.js" ></script>
-        <script src="/static/js/jquery.ui.datepicker.js" ></script>
-        <script src="/static/js/jquery.ui.datepicker-zh-CN.js" ></script>
+        <link rel="stylesheet" type="text/css" href="/static/css/ui.all.css" media="screem'>
+        <script src="/static/js/jquery.min.js" ></script>
+	<script src="/static/js/jquery-ui.min.js" ></script>
         <script src="/static/js/control.js" ></script>
+
     </head>
     <body>
         <!--<img src="static/mages/bg.jpg" />-->

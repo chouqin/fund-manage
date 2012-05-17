@@ -1,13 +1,12 @@
 # Create your views here.
 #coding=utf-8
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
-#from funds.models import Teacher
-from funds.models import Department, Teacher, ProjectType
-#from django.views.decorators.csrf import csrf_exempt
-#@csrf_exempt
 from django.http import HttpResponseRedirect
-import json
+from django.shortcuts import render_to_response
+from funds.models import Teacher
+from funds.models import Department
+from funds.models import ProjectType
+from funds.models import Project
 
 def index(request):
     return render_to_response('index.html')
@@ -25,20 +24,17 @@ def teacher_view(request):
 
 def teacher_add(request):
     if request.method == 'POST':
-        pass
-        #teacher_name = request.POST['name']
-        #teacher_title = request.POST['title']
-        #teacher_isdean = request.POST['is_dean']
-        #teacher_department = request.POST['department']
-        #Teacher.objects.create(name=teacher_name , title=teacher_title , is_dean=teacher_isdean,department=teacher_department)
-        #return HttpResponseRedirect('/teacher/')
-        #return HttpResponse(teacher)
+        teacher_name = request.POST['name']
+        teacher_title = request.POST['title']
+            if 'is_dean' in request.POST.keys():
+                teacher_isdean = False
+            else:
+                teacher_isdean = True
+        teacher_department = Department.objects.get(id=request.POST['department'])
+        Teacher.objects.create(name=teacher_name , title=teacher_title , is_dean=teacher_isdean , department=teacher_department )
+        return HttpResponseRedirect('/teacher')
     else:
-        #departments = []
         departments = Department.objects.all()
-        #dts = [{'name': dt.name, 'id': dt.id} for dt in departments]
-        #print departments
-        #return HttpResponse(departments)
         return render_to_response('teacher_add.html', {'departments': departments})
 
 def teacher_edit(request, teacher_id):
@@ -46,11 +42,10 @@ def teacher_edit(request, teacher_id):
         #save teacher and redirect to teacher_view
         pass
     else:
-        #departments = []
-        departments = Department.objects.all()
-        dts = [{'name': dt.name, 'id': dt.id} for dt in departments]
-        teacher = 0
-        return render_to_response('teacher_edit.html', {'departments': dts, teacher: teacher})
+        departments = []
+	departments = Department.objects.all()
+        teacher = Teacher.objects.get(id=teacher_id)
+        return render_to_response('teacher_edit.html', {'departments': departments, 'teacher': teacher})
 
 def teacher_delete(request):
     return render_to_response('index.html')
@@ -79,10 +74,22 @@ def project_view(request):
 def project_add(request):
     if request.method == 'POST':
         #save teacher and redirect to teacher_view
-        pass
+        teacherList = request.POST.getlist('teachers')
+        projectName = request.POST['name']
+        projectType = ProjectType.objects.get(id=request.POST['project_type'])
+        startTime = request.POST['created_at']
+        endTime = request.POST['ended_at']
+        teacher_list=[]
+        for teacher in teacherList:
+            teacherInstance = Teacher.objects.all().get(name=teacher)
+            teacher_list.append(teacherInstance)
+        addProject = Project.objects.create(name=projectName , project_type = projectType, created_at = startTime,ended_at=endTime)
+        for teacher in teacher_list:
+            addProject.teachers.add(teacher)
+        return HttpResponseRedirect('/project')
     else:
-        project_types = ProjectType.objects.all()
-        return render_to_response('project_add.html', {'project_types': project_types})
+        projectTypes = ProjectType.objects.all()
+        return render_to_response('project_add.html',{'project_types':projectTypes})
 
 def project_edit(request):
     return render_to_response('index.html')
@@ -95,9 +102,7 @@ def project_search(request):
 
 def expense_view(request):
     return render_to_response('index.html')
-
-def expense_add(request):
-    return render_to_response('index.html')
+def expense_add(request): return render_to_response('index.html')
 
 def record_view_all(request):
     return render_to_response('index.html')
