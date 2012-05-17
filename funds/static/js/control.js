@@ -1,4 +1,5 @@
 $('document').ready(function(){
+<<<<<<< HEAD
     //var autocomleteOption = {
         //source: ['教师1', '教师2', '俞勇', '茅旭初'],
         //select: function(event, ui){
@@ -21,19 +22,17 @@ $('document').ready(function(){
     //};
 
     $('input, textarea').uniform();
+=======
+    $('input, textarea, select').uniform();
+>>>>>>> dbb09a6f48a3c66585860cb8f7cf8a9bd11544bc
     $('#cdate').datepicker();
     $('#edate').datepicker();
-    //$("#date").datepicker();
-    //$("#cdate").datepicker({ showOn: 'button',buttonImageOnly: true, buttonImage: '/static/images/icon_cal.png', altField: 'input#cdate', altFormat: 'yy-mm-dd'});
-    //$("#edate").datepicker({ showOn: 'button', buttonImageOnly: true, buttonImage: '/static/images/icon_cal.png', altField: 'input#edate', altFormat: 'yy-mm-dd' });
     $("#cdate").datepicker('option', $.datepicker.regional['zh-CN']);
     $("#cdate").datepicker('option', 'dateFormat','yy-mm-dd');//set dateFormat
-    //$( "#cdate" ).datepicker( "option", "autoSize", true );
     $( "#cdate" ).datepicker( "option", "changeMonth", true );
     $( "#cdate" ).datepicker( "option", "changeYear", true );
     $("#edate").datepicker('option', $.datepicker.regional['zh-CN']);
     $("#edate").datepicker('option', 'dateFormat','yy-mm-dd');//set dateFormat
-    //$( "#cdate" ).datepicker( "option", "autoSize", true );
     $( "#edate" ).datepicker( "option", "changeMonth", true );
     $( "#edate" ).datepicker( "option", "changeYear", true );
     $('tr:odd').addClass('alt');
@@ -86,5 +85,20 @@ $('document').ready(function(){
         //$(this).before();
         return false;
     });
-    //$("#datepicker").datepicker({clickInput:true});
+    $('button').button();
+    $('button.project-add-device').click(function(){
+        $('#submit_type').val('add_device');
+        $('form').submit();
+        return false;
+    });
+    $('button.project-add-business').click(function(){
+        $('#submit_type').val('add_business');
+        $('form').submit();
+        return false;
+    });
+    $('button.project-add').click(function(){
+        $('#submit_type').val('save');
+        $('form').submit();
+        return false;
+    });
 });

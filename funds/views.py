@@ -2,12 +2,13 @@
 #coding=utf-8
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from funds.models import Teacher
 from funds.models import Department
 from funds.models import ProjectType
 from funds.models import Project
 import json
+from datetime import datetime
 
 def index(request):
     return render_to_response('index.html')
@@ -57,20 +58,15 @@ def teacher_search(request, key):
     print teachers
     result = []
     for teacher in teachers:
-        #print type(teacher.name)
         label = teacher.name + ' ' + teacher.title
-        #label = teacher.name.encode('utf8') + ' ' + teacher.title.encode('utf8')
-        #label = teacher.name
         print label
         result.append({'label': label, 'value': teacher.id})
-    #return json.dumps(result)
-    #return result
-    #print result
     return HttpResponse(json.dumps(result), mimetype='application/json')
-    #return HttpResponse(result, mimetype='application/json')
 
-def project_view(request):
-    return render_to_response('index.html')
+def project_index(request):
+    projects = Project.objects.filter(ended_at__gte=datetime.now()).order_by('create_at')
+    projects.reverse()
+    return render_to_response('project_index.html', {'projects': projects})
 
 def project_add(request):
     if request.method == 'POST':
@@ -82,17 +78,26 @@ def project_add(request):
         endTime = request.POST['ended_at']
         teacher_list=[]
         for teacher in teacherList:
-            teacherInstance = Teacher.objects.all().get(name=teacher)
+            teacherInstance = Teacher.objects.get(id=teacher)
             teacher_list.append(teacherInstance)
         addProject = Project.objects.create(name=projectName , project_type = projectType, created_at = startTime,ended_at=endTime)
         for teacher in teacher_list:
             addProject.teachers.add(teacher)
-        return HttpResponseRedirect('/project')
+        addProject.save()
+        submit_type = request.POST['submit_type']
+        if submit_type == 'save':
+            return HttpResponseRedirect('/project')
+        else:
+            if submit_type == 'add_device':
+                return HttpResponseRedirect('/project/add/device/' + str(addProject.id))
+            else:
+                return HttpResponseRedirect('/project/add/business/' + str(addProject.id))
     else:
         projectTypes = ProjectType.objects.all()
         return render_to_response('project_add.html',{'project_types':projectTypes})
 
 def project_add_device(request, project_id):
+<<<<<<< HEAD
 	if request.method == 'POST':
 		device_name = request.POST['name']
 		device_specification = request.POST['specification']
@@ -113,6 +118,19 @@ def project_add_device(request, project_id):
 	else:
 		return render_to_response('project_add_device.html')
 
+=======
+    if request.method == "POST":
+        pass
+    else:
+        return render_to_response('project_add_device.html', {'project_id', project_id})
+
+def project_view(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    #project = Project.objects.get(id=project_id)
+    devices = project.device_set().all()
+    businesses = project.business_set().all()
+    return render_to_response('project_view.html', {'project': project, 'devices': devices, 'business': businesses})
+>>>>>>> dbb09a6f48a3c66585860cb8f7cf8a9bd11544bc
 
 def project_edit(request):
     return render_to_response('index.html')
