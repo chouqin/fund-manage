@@ -43,11 +43,9 @@
             <td><label>时间 </label></td>
             <td colspan=1><div display="inline">
                 <select type="text" name="year"  theme="simple">
-                {#% for year in years%#}
-                <option value="10">10</option>
-                <option value="20">20</option>	
-                <option value="40">40</option>
-                {#% endfor %#}
+                {% for year in years%}
+                <option value="{{year}}">{{year}}</option>
+                {% endfor %}
                 </select></div>
             </td>
         </tr>
