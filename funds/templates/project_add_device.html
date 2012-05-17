@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="home"></div>
+<div class="content_box_content">
+    <form class="uniform" action="/project/add/device/{{ project_id }}" method="POST" id="project_add_form">
+        <input id="submit_type" type="hidden" name="submit_type"></input>
+        <li><button class="project-add-device">继续添加设备费</button><button class="project-add-business">继续添加业务费</button><button class="project-add">直接保存</button></li>
+    </form>
+    <div class="cleaner"><br/></div>
+</div>
+
+{% endblock %}
+~ 

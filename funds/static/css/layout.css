@@ -6,9 +6,9 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
 body {
@@ -41,7 +41,7 @@ a, a:link, a:visited { color: #ea6f0b; font-weight: 700; text-decoration: none; 
 a:hover { text-decoration: underline; }
 
 li {list-style: none;}
-button {background-color: #EAF2D3;}
+/*button {background-color: #EAF2D3;}*/
 /* @end */
 
 
@@ -56,6 +56,8 @@ h3 { font-size: 24px; margin: 0 0 15px; padding: 0; }
 h4 { font-size: 18px; margin: 0 0 15px; padding: 0; }
 h5 { font-size: 16px; margin: 0 0 10px; padding: 0;  }
 h6 { font-size: 14px; margin: 0 0 5px; padding: 0; }
+button span {font-size: 0.4em;}
+/*.ui-datepicker {font-size: 10px;}*/
 
 /* @group Layout */
 
@@ -164,3 +166,11 @@ color:#000;
 background-color:#EAF2D3;
 }
 
+.ui-datepicker .ui-datepicker-title select {font-size:1em; margin:1px 0; } 
+.ui-datepicker select.ui-datepicker-month-year {width: 100%;} 
+.ui-datepicker select.ui-datepicker-month, 
+.ui-datepicker select.ui-datepicker-year { width: 40%;} 
+.ui-datepicker .ui-datepicker-title select.ui-datepicker-year { float: left; } 
+
+.ui-datepicker-div, .ui-datepicker-inline, #ui-datepicker-div {font-size:0.4em}
+ 
