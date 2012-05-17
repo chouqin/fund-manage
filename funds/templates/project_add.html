@@ -6,7 +6,8 @@
         {% csrf_token %}
         <li>
                 <label>教师</label>
-                <input class="teacher" type="text" name="teachers"></input>
+                <input class="teacher" type="text"></input>
+                <input class="teache_id" type="hidden" name="teachers"></input>
                 <button id="addteacher">添加教师</button>
         </li>
         <li>
@@ -16,22 +17,23 @@
         <li>
                 <label>项目类型</label>
                 <select type="text" name="project_type">
-                <option value="111">111
-                <option value="222">222
+                    {% for type in project_types %}
+                        <option value="{{ type.id }}">{{ type.name }}</option>
+                    {% endfor %}
                 </select>
         </li>
         <li>
                 <label>起始时间</label>
-                <input type="text" id="datepicker" class="hasDatepicker" name="created_at"></input>
+                <input id="cdate" type="text" class="datepicker" name="created_at"></input>
         </li>
         <li>
                 <label>结束时间</label>
-                <input type="text" id="datapicker" class="hasDatepicker" name="ended_at"></input>
-        </li>
+                <input  id="edate" type="text" class="datepicker" name="ended_at"></input>
+                </li>
         <li>
-                <input type="SUBMIT" name="submit" value="提交"></input>
-                
+            <label>设备预算</label>
         </li>
+        <li><button type="submit">下一步</button><button type="reset">重置</button></li>
         </form>
         <div class="cleaner"><br/></div>
 </div>

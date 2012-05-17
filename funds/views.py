@@ -1,14 +1,13 @@
 # Create your views here.
 #coding=utf-8
-#from django.http import HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 #from funds.models import Teacher
-from funds.models import Department
+from funds.models import Department, Teacher, ProjectType
 #from django.views.decorators.csrf import csrf_exempt
 #@csrf_exempt
-from funds.models import Teacher
-from funds.models import Department
 from django.http import HttpResponseRedirect
+import json
 
 def index(request):
     return render_to_response('index.html')
@@ -31,8 +30,8 @@ def teacher_add(request):
         #teacher_title = request.POST['title']
         #teacher_isdean = request.POST['is_dean']
         #teacher_department = request.POST['department']
-        #Teacher.objects.creaet(name=teacher_name , title=teacher_title , is_dean=teacher_isdean,department=teacher_department)
-	#return HttpResponseRedirect('/teacher/')
+        #Teacher.objects.create(name=teacher_name , title=teacher_title , is_dean=teacher_isdean,department=teacher_department)
+        #return HttpResponseRedirect('/teacher/')
         #return HttpResponse(teacher)
     else:
         #departments = []
@@ -56,14 +55,34 @@ def teacher_edit(request, teacher_id):
 def teacher_delete(request):
     return render_to_response('index.html')
 
-def teacher_search(request):
-    return render_to_response('index.html')
+def teacher_search(request, key):
+    print type(key.encode('utf8'))
+    teachers = Teacher.objects.filter(name__startswith=key.encode('utf8'))
+    print teachers
+    result = []
+    for teacher in teachers:
+        #print type(teacher.name)
+        label = teacher.name + ' ' + teacher.title
+        #label = teacher.name.encode('utf8') + ' ' + teacher.title.encode('utf8')
+        #label = teacher.name
+        print label
+        result.append({'label': label, 'value': teacher.id})
+    #return json.dumps(result)
+    #return result
+    #print result
+    return HttpResponse(json.dumps(result), mimetype='application/json')
+    #return HttpResponse(result, mimetype='application/json')
 
 def project_view(request):
     return render_to_response('index.html')
 
 def project_add(request):
-    return render_to_response('project_add.html')
+    if request.method == 'POST':
+        #save teacher and redirect to teacher_view
+        pass
+    else:
+        project_types = ProjectType.objects.all()
+        return render_to_response('project_add.html', {'project_types': project_types})
 
 def project_edit(request):
     return render_to_response('index.html')
