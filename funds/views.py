@@ -7,6 +7,7 @@ from funds.models import Teacher
 from funds.models import Department
 from funds.models import ProjectType
 from funds.models import Project
+import json
 
 def index(request):
     return render_to_response('index.html')
@@ -26,10 +27,10 @@ def teacher_add(request):
     if request.method == 'POST':
         teacher_name = request.POST['name']
         teacher_title = request.POST['title']
-            if 'is_dean' in request.POST.keys():
-                teacher_isdean = False
-            else:
-                teacher_isdean = True
+        if 'is_dean' in request.POST.keys():
+            teacher_isdean = False
+        else:
+            teacher_isdean = True
         teacher_department = Department.objects.get(id=request.POST['department'])
         Teacher.objects.create(name=teacher_name , title=teacher_title , is_dean=teacher_isdean , department=teacher_department )
         return HttpResponseRedirect('/teacher')
