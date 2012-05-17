@@ -155,11 +155,6 @@ def project_add_device(request, project_id):
         years = [ year + currentTime.tm_year for year in years ]
         return render_to_response('project_add_device.html',{'years':years,})
 
-def project_add_business(request, project_id)
-	if request.method == "POST"
-		pass
-	else render_to_response('index.html')
-
 def project_view(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     #project = Project.objects.get(id=project_id)
