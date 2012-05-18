@@ -350,12 +350,13 @@ def device_expense_add(request, device_id, teacher_id):
         amount = request.POST['amount']
         device_expense = DeviceExpense(device=device, amount=amount, created_at=datetime.now(), status=1, teacher_id=teacher_id)
         device_expense.save()
-        device.remain_amount = device.remain_amount - int(amount)
+        device.remain_amount = device.remain_amount - float(amount)
         device.save()
         return HttpResponseRedirect('/record')
     else:
         amounts = device.remain_amount
         amount_array = range(amounts)
+        amount_array = [ item + 1 for item in amount_array]
         return render_to_response('device_expense.html', {'device': device, 'teacher_id': teacher_id, 'amount_array': amount_array})
 
 def business_expense_add(request, business_id, teacher_id):
@@ -371,7 +372,12 @@ def business_expense_add(request, business_id, teacher_id):
         return render_to_response('business_expense.html', {'business': business, 'teacher_id': teacher_id})
 
 def expense_view(request):
-    return render_to_response('index.html')
+    deviceExpenseList = DeviceExpense.objects.all()
+    #deviceTeacherList = []
+    #for deviceExpense in deviceExpenseList:
+        #teacherName = deviceExpense.teacher.name
+    businessExpenseList = BusinessExpense.objects.all()
+    return render_to_response('expense_view.html',{'deviceExpenseList':deviceExpenseList,'businessExpenseList':businessExpenseList,})
 
 def expense_add(request):
     return render_to_response('index.html')
