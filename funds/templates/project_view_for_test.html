@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% for  project in projects%}
+<p>{{project.project.name}} 	: 	{{project.project.project_type}}	{{project.project.created_at}}	{{project.project.ended_at}}</p>
+{% for teacher in project.teachers %}
+<li>{{teacher.name}}</li>
+{% endfor %}
+{% endfor %}
+{% endblock %}

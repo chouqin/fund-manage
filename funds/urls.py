@@ -24,12 +24,14 @@ urlpatterns = patterns('funds.views',
     url(r'^project/add$', 'project_add'),
     url(r'^project/delete/(?P<project_id>\d+)$', 'project_edit'),
     url(r'^project/add/device/(?P<project_id>\d+)$', 'project_add_device'),
-    url(r'^/device/edit/(?P<device_id>\d+)$', 'device_edit'),
-    url(r'^/device/delete/(?P<device_id>\d+)$', 'device_delete'),
-    url(r'^/business/edit/(?P<business_id>\d+)$', 'business_edit'),
-    url(r'^/business/delete/(?P<business_id>\d+)$', 'business_delete'),
+    url(r'^device/edit/(?P<device_id>\d+)$', 'device_edit'),
+    url(r'^device/delete/(?P<device_id>\d+)$', 'device_delete'),
+    url(r'^business/edit/(?P<business_id>\d+)$', 'business_edit'),
+    url(r'^business/delete/(?P<business_id>\d+)$', 'business_delete'),
+    url(r'^project/add/business/(?P<project_id>.+)$','project_add_business'),
     url(r'^expense$', 'expense_add'),
     url(r'^record$', 'expense_view'),
+
 )
 
 urlpatterns += staticfiles_urlpatterns()

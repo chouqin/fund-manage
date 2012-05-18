@@ -1,5 +1,6 @@
 $('document').ready(function(){
-    $('input, textarea, select').uniform();
+
+    $('input, textarea').uniform();
     $('#cdate').datepicker();
     $('#edate').datepicker();
     $("#cdate").datepicker('option', $.datepicker.regional['zh-CN']);
@@ -61,9 +62,14 @@ $('document').ready(function(){
         return false;
     });
     $('button').button();
+    //$('a').button();
     $('a.view').button();
     $('a.edit').button();
     $('a.delete').button();
+    $('a.project-edit').button();
+    $('a.project-view').button();
+    $('a.project-add-business').button();
+    $('a.project-add-device').button();
     $('button.project-add-device').click(function(){
         $('#submit_type').val('add_device');
         $('form').submit();

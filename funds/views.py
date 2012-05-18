@@ -1,5 +1,5 @@
-# Create your views here.
 #coding=utf-8
+import time
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404, redirect
@@ -8,6 +8,7 @@ from funds.models import Department
 from funds.models import ProjectType
 from funds.models import Project
 import json
+from funds.models import Device
 from datetime import datetime
 from django.utils.timezone import utc
 
@@ -18,11 +19,11 @@ def teacher_view(request):
     departments = []
     departmentList = Department.objects.all()
     for dt in departmentList:
-	teacherList = dt.teacher_set.all()
-	department_teachers={}
-	department_teachers['name']=dt.name
-	department_teachers['teachers'] = teacherList
-	departments.append(department_teachers)
+        teacherList = dt.teacher_set.all()
+        department_teachers={}
+        department_teachers['name']=dt.name
+        department_teachers['teachers'] = teacherList
+        departments.append(department_teachers)
     return render_to_response('teacher_view.html', {'departments': departments})
 
 def teacher_add(request):
@@ -30,9 +31,9 @@ def teacher_add(request):
         teacher_name = request.POST['name']
         teacher_title = request.POST['title']
         if 'is_dean' in request.POST.keys():
-            teacher_isdean = False
-        else:
             teacher_isdean = True
+        else:
+            teacher_isdean = False
         teacher_department = Department.objects.get(id=request.POST['department'])
         Teacher.objects.create(name=teacher_name , title=teacher_title , is_dean=teacher_isdean , department=teacher_department )
         return HttpResponseRedirect('/teacher')
@@ -74,6 +75,7 @@ def teacher_search(request, key):
         result.append({'label': label, 'value': teacher.id})
     return HttpResponse(json.dumps(result), mimetype='application/json')
 
+
 def project_index(request):
     projects = Project.objects.filter(ended_at__gte=datetime.utcnow().replace(tzinfo=utc)).order_by('created_at')
     projects.reverse()
@@ -86,12 +88,12 @@ def project_index(request):
         project_item['teachers'] = teachers
         project_item['created_at'] = project.created_at.strftime('%Y-%m')
         project_item['ended_at'] = project.ended_at.strftime('%Y-%m')
+        project_item['id'] = project.id
         project_list.append(project_item)
     return render_to_response('project_index.html', {'projects': project_list})
 
 def project_add(request):
     if request.method == 'POST':
-        #save teacher and redirect to teacher_view
         teacherList = request.POST.getlist('teachers')
         projectName = request.POST['name']
         projectType = ProjectType.objects.get(id=request.POST['project_type'])
@@ -107,7 +109,7 @@ def project_add(request):
         addProject.save()
         submit_type = request.POST['submit_type']
         if submit_type == 'save':
-            return HttpResponseRedirect('/project')
+            return HttpResponseRedirect('/project/' + str(addProject.id))
         else:
             if submit_type == 'add_device':
                 return HttpResponseRedirect('/project/add/device/' + str(addProject.id))
@@ -119,25 +121,56 @@ def project_add(request):
 
 def project_add_device(request, project_id):
     if request.method == "POST":
-        pass
+        name = request.POST['name']
+        specification = request.POST['specification']
+        maker = request.POST['maker']
+        if 'is_import' in request.POST.keys():
+            is_import = True
+        else:
+            is_import = False
+        price = request.POST['price']
+        amount = request.POST['amount']
+        position = request.POST['position']
+        remain_amount = amount
+        usage = request.POST['usage']
+        month_to_add = "-1-1 00:00"
+        year = request.POST['year']
+        year += month_to_add
+        project = get_object_or_404(Project, pk=project_id)
+        Device.objects.create(name=name,specification = specification ,maker = maker , is_import = is_import , price = price ,
+                amount = amount ,position = position ,remain_amount = remain_amount , usage = usage , year = year,project = project)
+        submit_type = request.POST['submit_type']
+        if submit_type == 'save':
+            return HttpResponseRedirect('/project/' + str(project_id))
+        else:
+            if submit_type == 'add_device':
+                return HttpResponseRedirect('/project/add/device/' + str(project_id))
+            else:
+                return HttpResponseRedirect('/project/add/business/' + str(project_id))
     else:
-        return render_to_response('project_add_device.html', {'project_id', project_id})
+        currentTime = time.localtime()
+        years = range(-6,6)
+        years = [ year + currentTime.tm_year for year in years ]
+        return render_to_response('project_add_device.html', {'project_id': project_id ,'years':years})
 
 def project_view(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    #project = Project.objects.get(id=project_id)
-    devices = project.device_set().all()
-    businesses = project.business_set().all()
+    devices = project.device_set.all()
+    businesses = project.business_set.all()
     teachers = project.teachers.all()
     return render_to_response('project_view.html', {'project': project, 'devices': devices, 'businesses': businesses, 'teachers': teachers})
 
 def project_edit(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     #project = Project.objects.get(id=project_id)
-    devices = project.device_set().all()
-    businesses = project.business_set().all()
+    devices = project.device_set.all()
+    businesses = project.business_set.all()
     teachers = project.teachers.all()
-    return render_to_response('project_edit.html', {'project': project, 'devices': devices, 'businesses': businesses, 'teachers': teachers})
+    projectTypes = ProjectType.objects.all()
+    return render_to_response('project_edit.html', {'project': project, 'devices': devices, 'businesses': businesses, 'teachers': teachers, 'project_types': projectTypes})
+
+def project_add_business(request , project_id):
+    return render_to_response('index.html')
 
 
 def project_delete(request):
@@ -147,11 +180,39 @@ def project_search(request):
     return render_to_response('index.html')
 
 def device_edit(request, device_id):
-    pass
+    if request.method == "POST":
+        device = get_object_or_404(Device, pk=device_id)
+        device.name = request.POST['name']
+        device.specification = request.POST['specification']
+        device.maker = request.POST['maker']
+        if 'is_import' in request.POST.keys():
+            device.is_import = True
+        else:
+            device.is_import = False
+        device.price = request.POST['price']
+        device.amount = request.POST['amount']
+        device.position = request.POST['position']
+        device.remain_amount = device.amount
+        device.usage = request.POST['usage']
+        month_to_add = "-12-31 00:00"
+        year = request.POST['year']
+        year += month_to_add
+        device.year = year
+        device.save()
+        return HttpResponseRedirect('/project/' + str(device.project_id))
+    else:
+        device = get_object_or_404(Device, pk=device_id)
+        currentTime = time.localtime()
+        years = range(-6,6)
+        years = [ year + currentTime.tm_year for year in years ]
+        return render_to_response('device_edit.html', {'device': device,'years':years})
 
 
 def device_delete(request, device_id):
-    pass
+    device = get_object_or_404(Device, pk=device_id)
+    project_id = device.project_id
+    device.delete()
+    return HttpResponseRedirect('/project/' + str(project_id))
 
 def business_edit(request, business_id):
     pass
@@ -163,7 +224,9 @@ def business_delete(request, business_id):
 
 def expense_view(request):
     return render_to_response('index.html')
-def expense_add(request): return render_to_response('index.html')
+
+def expense_add(request):
+    return render_to_response('index.html')
 
 def record_view_all(request):
     return render_to_response('index.html')
@@ -173,9 +236,4 @@ def expense_view_department(request):
 
 def expense_view_teacher(request):
     return render_to_response('index.html')
-#def project_edit(request):
-    #return render_to_response('index.html')
-
-#def project_delete(request):
-    #return render_to_response('index.html')
 

@@ -69,7 +69,7 @@
                         <td>{{ device.mount}}</td>
                         <td>{{ device.position}}</td>
                         <td>{{ device.usage}}</td>
-                        <td>{{ device.year}}</td>
+                        <td>{{ device.year.year}}</td>
                         <td>
                             <a class="edit" href="/device/edit/{{ device.id }}" >修改</a> 
                             <a class="delete" href="/device/delete/{{ device.id }}" >删除</a> 
@@ -77,6 +77,7 @@
                     </tr>
                     {% endfor %}
                 </tbody>
+                <a class='project-add-device' href="/project/add/device/{{ project.id }}">新增设备费</a>
             </table>
             <div class="cleaner"><br/></div>
 
@@ -93,7 +94,7 @@
                     {% for business in businesses %}
                     <tr>
                         <td>{{ business.total}}</td>
-                        <td>{{ business.year}}</td>
+                        <td>{{ business.year.year}}</td>
                         <td>
                             <a class="edit" href="/business/edit/{{ business.id }}" >修改</a> 
                             <a class="delete" href="/business/delete/{{ business.id }}" >删除</a> 
@@ -101,9 +102,11 @@
                     </tr>
                     {% endfor %}
                 </tbody>
+                <a class='project-add-business' href="/project/add/business/{{ project.id }}">新增业务费</a>
             </table>
             <div class="cleaner"><br/></div>
-            <a class="project-edit" href="/project/edit/{{project.id}}"> </a>
+
+            <a class="project-view" href="/project/view/{{project.id}}">返回当前项目</a>
 
     </div> <!-- end of content box content -->
 {% endblock %}

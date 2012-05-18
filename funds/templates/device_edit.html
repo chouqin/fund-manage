@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="home"></div>
+<div class="content_box_content">
+    <form  action="/device/edit/{{device.id}}" method="POST">
+	<h3>添加设备</h3>
+	<li>
+		<label>设备名称</label>
+        <input size=20 type="text" name="name" value="{{ device.name }}"/>
+	</li>	
+	<li>
+		<label >规格&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		<input size=20 type="text" name="specification" value="{{ device.specification }}"/>
+	</li>
+	<li>
+		<label>制造商&nbsp&nbsp&nbsp</label>
+		<input size=20 type="text" name="maker" value="{{ device.maker }}"/>
+	</li>
+	
+	<li>
+		<label>单价&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		<input size=10 type="text" name="price" value="{{ device.price }}"/>
+	</li>
+	<li>
+		<label>数量&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		<input size=10 type="text" name="amount" value="{{ device.amount }}"/>
+	</li>
+	<li>
+		<label> 安放位置 </label>
+		<input type="text" name="position" value="{{ device.position }}"/>
+	</li>
+	<li>
+		<label>用途&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		<input type="text" name="usage" value="{{ device.usage }}"/>
+	</li>
+	<li>
+		<label>年份&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		<select type="text" name="year"  theme="simple" value="{{ device.year.year }}">
+		{% for year in years %}
+		<option value="{{year}}">{{year}}</option>
+		{% endfor %}
+		</select>
+		
+	</li>
+	<li>
+		<label>是否进口 </label>
+        <input type="checkbox" name="is_import" {% if device.is_import %}checked="checked"{% endif %}/>
+		
+	</li>
+    <li><button type="submit" class="device-edit-save">保存修改</button><a class="project-view" href="/project/{{ device.project_id }}">返回查看当前项目</a></li>
+	</form>
+
+	</div>
+{% endblock %}

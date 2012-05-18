@@ -37,7 +37,7 @@ cite { font-weight: bold; color:#000; }
 cite span { color: #000; }
 em { color: #000; font-weight: bold }
 
-a, a:link, a:visited { color: #ea6f0b; font-weight: 700; text-decoration: none; font-size: 11px }
+a, a:link, a:visited { color: black; font-weight: 700; text-decoration: none; font-size: 11px }
 a:hover { text-decoration: underline; }
 
 li {list-style: none;}

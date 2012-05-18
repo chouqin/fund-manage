@@ -4,10 +4,10 @@
     <div class="content_box_content"> 
             <div id="project-basic-information">
                 <h2>{{ project.name }}</h2>
-                <span>项目类型: {{ project.project_type}}</span>
-                <span>教师：{%for teacher in teachers%} {{ teacher.name}} {% endfor %}</span>
-                <span>起始时间： {{ project.created_at.year}}- {{ project.created_at.month}}</span>
-                <span>终止时间： {{ project.ended_at.year}}- {{ project.ended_at.month}}</span>
+                <p>项目类型: {{ project.project_type}}</p>
+                <p>教师：{%for teacher in teachers%} {{ teacher.name}} {% endfor %}</p>
+                <p>起始时间： {{ project.created_at.year}}- {{ project.created_at.month}}</p>
+                <p>终止时间： {{ project.ended_at.year}}- {{ project.ended_at.month}}</p>
             </div>
             <table class="tables">
                 <thead>
@@ -41,7 +41,7 @@
                         <td>{{ device.mount}}</td>
                         <td>{{ device.position}}</td>
                         <td>{{ device.usage}}</td>
-                        <td>{{ device.year}}</td>
+                        <td>{{ device.year.year}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -66,7 +66,7 @@
                 </tbody>
             </table>
             <div class="cleaner"><br/></div>
-            <a class="project-edit" href="/project/edit/{{project.id}}"> </a>
+            <a class="project-edit" href="/project/edit/{{project.id}}">修改这个项目</a>
 
     </div> <!-- end of content box content -->
 {% endblock %}

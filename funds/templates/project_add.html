@@ -2,7 +2,7 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
-        <form class="uniform" action="/project/add" method="POST" id="project_add_form">
+           <form class="uniform" action="/project/add" method="POST" id="project_add_form">
         {% csrf_token %}
         <li>
                 <label>教师</label>
@@ -35,6 +35,5 @@
         </form>
         <div class="cleaner"><br/></div>
 </div>
-
 {% endblock %}
 ~              
