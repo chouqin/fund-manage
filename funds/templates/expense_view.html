@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block content%}
+    <div id="home"></div>
+    <div class="content_box_content">
+    <thead>
+        <h3> 项目设备经费报销</h3>
+    </thead>
+            <table class="tables">
+                <tbody>
+                    <tr>
+                        <th>项目名称</th>
+                        <th>设备名称</th>
+                        <th>报销数量</th>
+                        <th>报销时间</th>
+                        <th>状态</th>
+                        <th>报销老师</th>
+                    </tr>
+                    {% for deviceExpense in deviceExpenseList %}
+                    <tr>
+                        <td>{{ deviceExpense.device.project.name }}</td>
+                        <td>{{ deviceExpense.device.name }}</td>
+                        <td>{{ deviceExpense.amount }}</td>
+                        <td>{{ deviceExpense.created_at.year}}-{{deviceExpense.created_at.month}}-{{deviceExpense.created_at.day}} {{deviceExpense.created_at.hour}}:{{deviceExpense.created_at.minute}}</td>
+                        {% if deviceExpense.status == 1 %}
+                        <td>可报销</td>
+                        {% else %}
+                        <td>不可报销<td>
+                        {% endif %}
+                        <td>{{ deviceExpense.teacher.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br />
+            <thead>
+            <h3>项目业务经费报销</h3>
+            </thead>
+            <table class="tables">
+                <tbody>
+                    <tr>
+                        <th>项目名称</th>
+                        <th>报销金额</th>
+                        <th>剩余金额</th>
+                        <th>报销时间</th>
+                        <th>状态</th>
+                        <th>报销老师</th>
+                    </tr>
+                    {% for businessExpense in businessExpenseList %}
+                    <tr>
+                        <td>{{ businessExpense.business.project.name }}</td>
+                        <td>{{ businessExpense.amount }}</td>
+                        <td>{{ businessExpense.business.remain }}</td>
+                        <td>{{ businessExpense.created_at.year}}-{{businessExpense.created_at.month}}-{{businessExpense.created_at.day}} {{businessExpense.created_at.hour}}:{{businessExpense.created_at.minute}}</td>
+                        {% if businessExpense.status == 1 %}
+                        <td>可报销</td>
+                        {% else %}
+                        <td>不可报销<td>
+                        {% endif %}
+                        <td>{{ businessExpense.teacher.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="cleaner"><br/></div>
+
+    </div> <!-- end of content box content -->
+{% endblock %}
