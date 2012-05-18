@@ -61,6 +61,9 @@ $('document').ready(function(){
         return false;
     });
     $('button').button();
+    $('a.view').button();
+    $('a.edit').button();
+    $('a.delete').button();
     $('button.project-add-device').click(function(){
         $('#submit_type').val('add_device');
         $('form').submit();

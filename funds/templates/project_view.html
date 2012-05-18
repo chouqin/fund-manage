@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+{% block content%}
+    <div id="home"></div>
+    <div class="content_box_content"> 
+            <div id="project-basic-information">
+                <h2>{{ project.name }}</h2>
+                <span>项目类型: {{ project.project_type}}</span>
+                <span>教师：{%for teacher in teachers%} {{ teacher.name}} {% endfor %}</span>
+                <span>起始时间： {{ project.created_at.year}}- {{ project.created_at.month}}</span>
+                <span>终止时间： {{ project.ended_at.year}}- {{ project.ended_at.month}}</span>
+            </div>
+            <table class="tables">
+                <thead>
+                    <h3> 设备预算 </h3>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>设备名称</th>
+                        <th>规格</th>
+                        <th>制造商</th>
+                        <th>是否进口</th>
+                        <th>单价(万元)</th>
+                        <th>数量</th>
+                        <th>安放位置</th>
+                        <th>用途</th>
+                        <th>年份</th>
+                    </tr>
+                    {% for device in devices %}
+                    <tr>
+                        <td>{{ device.name }}</td>
+                        <td>{{ device.specification}}</td>
+                        <td>{{ device.maker}}</td>
+                        <td>
+                            {% if device.is_import %}
+                                是 
+                            {% else %}
+                                否
+                            {% endif %}
+                        </td>
+                        <td>{{ device.price}}</td>
+                        <td>{{ device.mount}}</td>
+                        <td>{{ device.position}}</td>
+                        <td>{{ device.usage}}</td>
+                        <td>{{ device.year}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="cleaner"><br/></div>
+
+            <table class="tables">
+                <thead>
+                    <h3>业务费预算</h3>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>数目(万元)</th>
+                        <th>年份</th>
+                    </tr>
+                    {% for business in businesses %}
+                    <tr>
+                        <td>{{ business.total}}</td>
+                        <td>{{ business.year}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="cleaner"><br/></div>
+            <a class="project-edit" href="/project/edit/{{project.id}}"> </a>
+
+    </div> <!-- end of content box content -->
+{% endblock %}

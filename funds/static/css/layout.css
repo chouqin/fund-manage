@@ -147,13 +147,13 @@ border-collapse:collapse;
 }
 .tables td, .tables th 
 {
-font-size:1.2em;
+font-size:0.8em;
 border:1px solid #98bf21;
 padding:3px 7px 2px 7px;
 }
 .tables th 
 {
-font-size:1.4em;
+font-size:1.0em;
 text-align:left;
 padding-top:5px;
 padding-bottom:4px;
@@ -164,6 +164,10 @@ color:#fff;
 {
 color:#000;
 background-color:#EAF2D3;
+}
+.tables a
+{
+color: #fff;
 }
 
 .ui-datepicker .ui-datepicker-title select {font-size:1em; margin:1px 0; } 

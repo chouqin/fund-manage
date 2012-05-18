@@ -12,8 +12,10 @@
                         <th>姓名</th>
                         <th>职称</th>
                         <th>系主任</th>
+                        <th>操作</th>
                     </tr>
                     {% for teacher in department.teachers %}
+                    <tr>
                         <td>{{ teacher.name }}</td>
                         <td>{{ teacher.title }}</td>
                         <td>
@@ -22,6 +24,10 @@
                             {% else %}
                                 否
                             {% endif %}
+                        </td>
+                        <td>
+                            <a class="edit" href="/teacher/edit/{{ teacher.id }}" >修改</a> 
+                            <a class="delete" href="/teacher/delete/{{ teacher.id }}" >删除</a> 
                         </td>
                     </tr>
                     {% endfor %}

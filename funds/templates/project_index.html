@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% block content%}
+    <div id="home"></div>
+    <div class="content_box_content"> 
+            <table class="tables">
+                <tbody>
+                    <tr>
+                        <th>项目类型</th>
+                        <th>项目名称</th>
+                        <th>教师</th>
+                        <th>起始时间</th>
+                        <th>终止时间</th>
+                        <th>操作</th>
+                    </tr>
+                    {% for project in projects %}
+                        <td>{{ project.project_type }}</td>
+                        <td>{{ project.name }}</td>
+                        <td>
+                            {%for teacher in project.teachers %}{{ teacher.name }} {% endfor %}
+                        </td>
+                        <td>
+                            {{ project.created_at}}
+                        </td>
+                        <td>
+                            {{ project.ended_at}}
+                        </td>
+                        <td>
+                            <a class="view" href="/project/{{ project.id }}" >查看</a> 
+                            <a class="edit" href="/project/edit/{{ project.id }}" >修改</a> 
+                            <a class="delete" href="/project/delete/{{ project.id }}" >删除</a> 
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="cleaner"><br/></div>
+
+    </div> <!-- end of content box content -->
+{% endblock %}
