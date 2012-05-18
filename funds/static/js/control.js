@@ -66,8 +66,10 @@ $('document').ready(function(){
     $('a.view').button();
     $('a.edit').button();
     $('a.delete').button();
+    $('a.teacher-add').button();
     $('a.project-edit').button();
     $('a.project-view').button();
+    $('a.project-add').button();
     $('a.project-add-business').button();
     $('a.project-add-device').button();
     $('button.project-add-device').click(function(){
