@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from funds.models import Teacher
 from funds.models import Department
 from funds.models import ProjectType
-from funds.models import Project
+from funds.models import Project , Business
 import json
 from funds.models import Device
 from datetime import datetime
@@ -58,7 +58,12 @@ def teacher_edit(request, teacher_id):
         teacher = Teacher.objects.get(id=teacher_id)
         return render_to_response('teacher_edit.html', {'departments': departments, 'teacher': teacher})
 
-def teacher_delete(request):
+def teacher_delete(request,teacher_id):
+    teacher = get_object_or_404(Teacher, pk=teacher_id)
+    projectList = teacher.project_set.all()
+    for project in projectList:
+        project.teachers.remove(teacher)
+    teacher.delete()
     return render_to_response('index.html')
 
 def teacher_search(request, key):
@@ -128,7 +133,7 @@ def project_add_device(request, project_id):
         position = request.POST['position']
         remain_amount = amount
         usage = request.POST['usage']
-        month_to_add = "-1-1 00:00"
+        month_to_add = "-12-31 00:00"
         year = request.POST['year']
         year += month_to_add
         project = get_object_or_404(Project, pk=project_id)
@@ -155,12 +160,35 @@ def project_view(request, project_id):
     return render_to_response('project_view.html', {'project': project, 'devices': devices, 'business': businesses})
 
 def project_add_business(request , project_id):
-    return render_to_response('index.html')
+    if request.method == 'POST':
+        total = request.POST['total']
+        year = request.POST['year']
+        year += "-12-31 00:00"
+        project = get_object_or_404(Project , pk=project_id)
+        Business.objects.create(total = total , remain = total , project = project , year = year)
+        submit_type = request.POST['submit_type']
+        if submit_type == 'save':
+            return HttpResponseRedirect('/project')
+        else:
+            if submit_type == 'add_device':
+                return HttpResponseRedirect('/project/add/device/'+str(project_id))
+            else:
+                return HttpResponseRedirect('/project/add/business/'+str(project_id))
+    else:
+        currentTime = time.localtime()
+        years = range(-6,6)
+        years = [year + currentTime.tm_year for year in years]
+        return render_to_response('project_add_business.html',{'years':years , 'project_id':project_id,})
 
 def project_edit(request):
     return render_to_response('index.html')
 
-def project_delete(request):
+def project_delete(request,project_id):
+    project = get_object_or_404(Project,pk=project_id)
+    #teacherList = project.set.all()
+    #for teacher in teacherList:
+        #project.teachers.remove(teacher)
+    #project.delete()
     return render_to_response('index.html')
 
 def project_search(request):
