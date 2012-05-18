@@ -66,6 +66,8 @@ $('document').ready(function(){
     $('a.view').button();
     $('a.edit').button();
     $('a.delete').button();
+    $('a.choose').button();
+    $('a.return').button();
     $('a.teacher-add').button();
     $('a.project-edit').button();
     $('a.project-view').button();

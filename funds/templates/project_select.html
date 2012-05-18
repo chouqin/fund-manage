@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content%}
+    <div id="home"></div>
+    <div class="content_box_content"> 
+        <h3>报销老师: {{ teacher.name }}, 请选择项目进行报销</h3>
+            <table class="tables">
+                <tbody>
+                    <tr>
+                        <th>项目类型</th>
+                        <th>项目名称</th>
+                        <th>起始时间</th>
+                        <th>终止时间</th>
+                        <th>操作</th>
+                    </tr>
+                    {% for project in projects %}
+                        <td>{{ project.project_type }}</td>
+                        <td>{{ project.name }}</td>
+                        <td>
+                            {{ project.created_at.year}}-{{ project.created_at.month}}
+                        </td>
+                        <td>
+                            {{ project.ended_at.year}}-{{ project.ended_at.month}}
+                        </td>
+                        <td>
+                            <a class="choose" href="/funds/select/{{ teacher.id }}/{{ project.id }}" >报销</a> 
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a class="return" href="/expense">返回上一步</a>
+            <div class="cleaner"><br/></div>
+
+    </div> <!-- end of content box content -->
+{% endblock %}

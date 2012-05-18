@@ -2,6 +2,7 @@
 {% block content%}
     <div id="home"></div>
     <div class="content_box_content"> 
+            <h2>请选择经费进行报销</h2>
             <div id="project-basic-information">
                 <h2>{{ project.name }}</h2>
                 <p>项目类型: {{ project.project_type}}</p>
@@ -24,6 +25,7 @@
                         <th>安放位置</th>
                         <th>用途</th>
                         <th>年份</th>
+                        <th>修改</th>
                     </tr>
                     {% for device in devices %}
                     <tr>
@@ -38,10 +40,13 @@
                             {% endif %}
                         </td>
                         <td>{{ device.price}}</td>
-                        <td>{{ device.amount}}</td>
+                        <td>{{ device.remain_amount}}</td>
                         <td>{{ device.position}}</td>
                         <td>{{ device.usage}}</td>
                         <td>{{ device.year.year}}</td>
+                        <td>
+                            <a class="choose" href="/deviceExpense/add/{{ device.id }}/{{ teacher_id }}" >报销</a> 
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -56,17 +61,21 @@
                     <tr>
                         <th>数目(万元)</th>
                         <th>年份</th>
+                        <th>修改</th>
                     </tr>
                     {% for business in businesses %}
                     <tr>
-                        <td>{{ business.total}}</td>
-                        <td>{{ business.year}}</td>
+                        <td>{{ business.remain}}</td>
+                        <td>{{ business.year.year}}</td>
+                        <td>
+                            <a class="choose" href="/businessExpense/add/{{ business.id }}/{{ teacher_id }}" >报销</a> 
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             <div class="cleaner"><br/></div>
-            <a class="project-edit" href="/project/edit/{{project.id}}">修改这个项目</a>
+            <a class="return" href="/project/select/{{teacher_id}}">返回</a>
 
     </div> <!-- end of content box content -->
 {% endblock %}
