@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="home"></div>
+<div class="content_box_content">
+    <form  action="/business/edit/{{business.id}}" method="POST">
+	<h3>添加业务</h3>
+	<li>
+		<label>项目总额</label>
+        <input size=20 type="text" name="total" value="{{ business.total }}"/>
+    </li>
+ 	<li>
+		<label>项目余额</label>
+        <input size=20 type="text" name="remain" value="{{ business.remain }}"/>
+    </li>
+		<label>年份&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		<select type="text" name="year"  theme="simple" value="{{ business.year.year }}">
+		{% for year in years %}
+		<option value="{{year}}">{{year}}</option>
+		{% endfor %}
+		</select>
+		
+	</li>
+    <li><button type="submit" class="business-edit-save">保存修改</button><a class="project-view" href="/project/{{ device.project_id }}">返回查看当前项目</a></li>
+	</form>
+
+	</div>
+{% endblock %}

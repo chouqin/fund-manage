@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+{% block content%}
+    <div id="home"></div>
+    <div class="content_box_content"> 
+            <div id="project-basic-information-edit">
+                <form class="uniform" action="/project/edit/{{ project.id }}" method="POST" id="project_add_form">
+                {% csrf_token %}
+                <li>
+                        <label>教师</label>
+                        {%for teacher in teachers%}
+                        <input class="teacher" type="text" value="{{teacher.name}}"></input>
+                            <input class="teache_id" type="hidden" value="{{teacher.id}}"></input>
+                        {% endfor %}
+                        <button id="addteacher">添加教师</button>
+                </li>
+                <li>
+                        <label>项目名称</label>
+                        <input type="text" name="name" value="{{project.name}}"></input>
+                </li>
+                <li>
+                        <label>项目类型</label>
+                        <select type="text" name="project_type" value="{{project.type}}">
+                            {% for type in project_types %}
+                                <option value="{{ type.id }}">{{ type.name }}</option>
+                            {% endfor %}
+                        </select>
+                </li>
+                <li>
+                        <label>起始时间</label>
+                        <input id="cdate" type="text" class="datepicker" name="created_at" value="{{project.created_at.year}}-{{project.created_at.month}}-{{project.created_at.day}}"></input>
+                </li>
+                <li>
+                        <label>结束时间</label>
+                        <input  id="edate" type="text" class="datepicker" name="ended_at" value="{{project.ended_at.year}}-{{project.ended_at.month}}-{{project.ended_at.day}}"></input>
+                        </li>
+                        <button type='submit'>提交</button>
+                </form>
+            </div>
+            <table class="tables">
+                <thead>
+                    <h3> 设备预算 </h3>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>设备名称</th>
+                        <th>规格</th>
+                        <th>制造商</th>
+                        <th>是否进口</th>
+                        <th>单价(万元)</th>
+                        <th>数量</th>
+                        <th>安放位置</th>
+                        <th>用途</th>
+                        <th>年份</th>
+                        <th>修改</th>
+                    </tr>
+                    {% for device in devices %}
+                    <tr>
+                        <td>{{ device.name }}</td>
+                        <td>{{ device.specification}}</td>
+                        <td>{{ device.maker}}</td>
+                        <td>
+                            {% if device.is_import %}
+                                是 
+                            {% else %}
+                                否
+                            {% endif %}
+                        </td>
+                        <td>{{ device.price}}</td>
+                        <td>{{ device.mount}}</td>
+                        <td>{{ device.position}}</td>
+                        <td>{{ device.usage}}</td>
+                        <td>{{ device.year.year}}</td>
+                        <td>
+                            <a class="edit" href="/device/edit/{{ device.id }}" >修改</a> 
+                            <a class="delete" href="/device/delete/{{ device.id }}" >删除</a> 
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <a class='project-add-device' href="/project/add/device/{{ project.id }}">新增设备费</a>
+            </table>
+            <div class="cleaner"><br/></div>
+
+            <table class="tables">
+                <thead>
+                    <h3>业务费预算</h3>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>数目(万元)</th>
+                        <th>年份</th>
+                        <th>修改</th>
+                    </tr>
+                    {% for business in businesses %}
+                    <tr>
+                        <td>{{ business.total}}</td>
+                        <td>{{ business.year.year}}</td>
+                        <td>
+                            <a class="edit" href="/business/edit/{{ business.id }}" >修改</a> 
+                            <a class="delete" href="/business/delete/{{ business.id }}" >删除</a> 
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <a class='project-add-business' href="/project/add/business/{{ project.id }}">新增业务费</a>
+            </table>
+            <div class="cleaner"><br/></div>
+
+            <a class="project-view" href="/project/{{project.id}}">返回当前项目</a>
+
+    </div> <!-- end of content box content -->
+{% endblock %}
