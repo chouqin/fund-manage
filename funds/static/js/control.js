@@ -12,7 +12,7 @@ $('document').ready(function(){
     $( "#edate" ).datepicker( "option", "changeMonth", true );
     $( "#edate" ).datepicker( "option", "changeYear", true );
     $('tr:odd').addClass('alt');
-    $('#project_add_form input.teacher').autocomplete({
+    $('#project-form input.teacher').autocomplete({
         source: function(request, response){
             url = "/teacher/search/" + request.term;
 
@@ -35,7 +35,7 @@ $('document').ready(function(){
     });
     $('#addteacher').click(function(){
         //alert("here");
-        $('<input class="teacher" type="text" name="teachers"></input> <input class="teache_id" type="hidden" name="teachers"></input>')
+        $('<input class="teacher" type="text" name="teacher_name"></input> <input class="teache_id" type="hidden" name="teachers"></input>')
         .insertBefore($(this))
         .autocomplete({
             source: function(request, response){
@@ -89,4 +89,52 @@ $('document').ready(function(){
         $('form').submit();
         return false;
     });
+
+    $.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        },
+        "请输入合法数据"
+    );
+
+    //$("#business-form #total").rules("add", { regex: "(^[0-9]+\.[0-9]+$)|(^[0-9]+$)" });
+    //$("#device-form #price").rules("add", { regex: "(^[0-9]+\.[0-9]+$)|(^[0-9]+$)" });
+    //$("#device-form #amount").rules("add", { regex: "^[0-9]+$" });
+
+    $('#teacher-form').validate({
+        messages: {
+            name: '请输入教师姓名',
+            title: '请输入教师职称'
+        }
+    });
+
+    $('#project-form').validate({
+        messages: {
+            teacher_name: '请输入教师',
+            name: '请输入项目名称',
+            created_at: '请输入起始时间',
+            ended_at: '请输入结束时间'
+        }
+    });
+
+    $('#device-form').validate({
+        messages: {
+            name: '请输入设备名称',
+            specification: '请输入设备规格',
+            maker: '请输入生产厂商',
+            price: '请正确输入单价',
+            amount: '请正确输入数目',
+            position: '请输入安装地点',
+            usage: '请输入用途',
+        }
+    });
+
+    $('#business-form').validate({
+        messages: {
+            total: '请正确输入数目',
+        }
+    });
+
 });

@@ -3,19 +3,22 @@
     <div id="home"></div>
     <div class="content_box_content"> 
             <div id="project-basic-information-edit">
-                <form class="uniform" action="/project/edit/{{ project.id }}" method="POST" id="project_add_form">
+                {%if error_message%}
+                    <p class="error">{{ error_message }}<p>
+                {% endif %}
+                <form class="uniform" action="/project/edit/{{ project.id }}" method="POST" id="project-form">
                 {% csrf_token %}
                 <li>
                         <label>教师</label>
                         {%for teacher in teachers%}
-                        <input class="teacher" type="text" value="{{teacher.name}}"></input>
-                            <input class="teache_id" type="hidden" value="{{teacher.id}}"></input>
+                            <input class="teacher required" type="text" value="{{teacher.name}}" name="teacher_name"></input>
+                            <input class="teache_id required" type="hidden" value="{{teacher.id}}" name="teachers"></input>
                         {% endfor %}
                         <button id="addteacher">添加教师</button>
                 </li>
                 <li>
                         <label>项目名称</label>
-                        <input type="text" name="name" value="{{project.name}}"></input>
+                        <input type="text" name="name" value="{{project.name}}" class="required"></input>
                 </li>
                 <li>
                         <label>项目类型</label>
@@ -27,11 +30,11 @@
                 </li>
                 <li>
                         <label>起始时间</label>
-                        <input id="cdate" type="text" class="datepicker" name="created_at" value="{{project.created_at.year}}-{{project.created_at.month}}-{{project.created_at.day}}"></input>
+                        <input id="cdate" type="text" class="datepicker required" name="created_at" value="{{project.created_at.year}}-{{project.created_at.month}}-{{project.created_at.day}}"></input>
                 </li>
                 <li>
                         <label>结束时间</label>
-                        <input  id="edate" type="text" class="datepicker" name="ended_at" value="{{project.ended_at.year}}-{{project.ended_at.month}}-{{project.ended_at.day}}"></input>
+                        <input  id="edate" type="text" class="datepicker required" name="ended_at" value="{{project.ended_at.year}}-{{project.ended_at.month}}-{{project.ended_at.day}}"></input>
                         </li>
                         <button type='submit'>提交</button>
                 </form>

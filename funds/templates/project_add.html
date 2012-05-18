@@ -2,17 +2,20 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
-           <form class="uniform" action="/project/add" method="POST" id="project_add_form">
+        {%if error_message%}
+            <p class="error">{{ error_message }}<p>
+        {% endif %}
+           <form class="uniform" action="/project/add" method="POST" id="project-form">
         {% csrf_token %}
         <li>
                 <label>教师</label>
-                <input class="teacher" type="text"></input>
-                <input class="teache_id" type="hidden" name="teachers"></input>
+                <input class="teacher required" type="text" name="teacher_name"></input>
+                <input class="required teache_id" type="hidden" name="teachers"></input>
                 <button id="addteacher">添加教师</button>
         </li>
         <li>
                 <label>项目名称</label>
-                <input type="text" name="name"></input>
+                <input type="text" name="name" class="required"></input>
         </li>
         <li>
                 <label>项目类型</label>
@@ -24,11 +27,11 @@
         </li>
         <li>
                 <label>起始时间</label>
-                <input id="cdate" type="text" class="datepicker" name="created_at"></input>
+                <input id="cdate" type="text" class="required" name="created_at"></input>
         </li>
         <li>
                 <label>结束时间</label>
-                <input  id="edate" type="text" class="datepicker" name="ended_at"></input>
+                <input  id="edate" type="text" class="required" name="ended_at"></input>
                 </li>
         <input id="submit_type" type="hidden" name="submit_type"></input>
         <li><button class="project-add-device">添加设备费</button><button class="project-add-business">添加业务费</button><button class="project-add">直接保存</button></li>

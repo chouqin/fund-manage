@@ -2,36 +2,36 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
-    <form  action="/project/add/device/{{project_id}}" method="POST">
+    <form  action="/project/add/device/{{project_id}}" method="POST" id="device-form">
 	<h3>添加设备</h3>
 	<li>
 		<label>设备名称</label>
-		<input size=20 type="text" name="name" />
+		<input size=20 type="text" name="name" class="required"/>
 	</li>	
 	<li>
 		<label >规格&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		<input size=20 type="text" name="specification"/>
+		<input size=20 type="text" name="specification" class="required"/>
 	</li>
 	<li>
 		<label>制造商&nbsp&nbsp&nbsp</label>
-		<input size=20 type="text" name="maker"/>
+		<input size=20 type="text" name="maker" class="required"/>
 	</li>
 	
 	<li>
 		<label>单价&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		<input size=10 type="text" name="price"/>
+		<input id="price" size=10 type="text" name="price" class="required"/>
 	</li>
 	<li>
 		<label>数量&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		<input size=10 type="text" name="amount"/>
+		<input id='amount' size=10 type="text" name="amount" class="required"/>
 	</li>
 	<li>
 		<label> 安放位置 </label>
-		<input type="text" name="position"/>
+		<input type="text" name="position" class="required"/>
 	</li>
 	<li>
 		<label>用途&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		<input type="text" name="usage"/>
+		<input type="text" name="usage" class="required"/>
 	</li>
 	<li>
 		<label>年份&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
@@ -50,6 +50,21 @@
 	<input id="submit_type" type="hidden" name="submit_type"></input>
         <li><button class="project-add-device">继续添加设备费</button><button class="project-add-business">继续添加业务费</button><button class="project-add">直接保存</button></li>
 	</form>
+    <script type="text/javascript">
+        $('document').ready(function(){
+            $.validator.addMethod(
+                "regex",
+                function(value, element, regexp) {
+                    var re = new RegExp(regexp);
+                    return this.optional(element) || re.test(value);
+                },
+                "请输入合法数据"
+            );
+            $("#device-form #price").rules("add", { regex: "(^[0-9]+\.[0-9]+$)|(^[0-9]+$)" });
+            $("#device-form #amount").rules("add", { regex: "^[0-9]+$" });
+        });
+    </script>
+
 
 	</div>
 {% endblock %}

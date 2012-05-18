@@ -2,36 +2,36 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
-    <form  action="/device/edit/{{device.id}}" method="POST">
+    <form  action="/device/edit/{{device.id}}" method="POST" id="device-form">
 	<h3>添加设备</h3>
 	<li>
 		<label>设备名称</label>
-        <input size=20 type="text" name="name" value="{{ device.name }}"/>
+        <input size=20 type="text" name="name" value="{{ device.name }}" class="required"/>
 	</li>	
 	<li>
 		<label >规格&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		<input size=20 type="text" name="specification" value="{{ device.specification }}"/>
+		<input size=20 type="text" name="specification" value="{{ device.specification }}" class="required"/>
 	</li>
 	<li>
 		<label>制造商&nbsp&nbsp&nbsp</label>
-		<input size=20 type="text" name="maker" value="{{ device.maker }}"/>
+		<input size=20 type="text" name="maker" value="{{ device.maker }}" class="required"/>
 	</li>
 	
 	<li>
 		<label>单价&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		<input size=10 type="text" name="price" value="{{ device.price }}"/>
+        <input id="total" size=10 type="text" name="price" value="{{ device.price }}" class="required"/>
 	</li>
 	<li>
 		<label>数量&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		<input size=10 type="text" name="amount" value="{{ device.amount }}"/>
+		<input id="amount" size=10 type="text" name="amount" value="{{ device.amount }}" class="required"/>
 	</li>
 	<li>
 		<label> 安放位置 </label>
-		<input type="text" name="position" value="{{ device.position }}"/>
+		<input type="text" name="position" value="{{ device.position }}" class="required"/>
 	</li>
 	<li>
 		<label>用途&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		<input type="text" name="usage" value="{{ device.usage }}"/>
+		<input type="text" name="usage" value="{{ device.usage }}" class="required"/>
 	</li>
 	<li>
 		<label>年份&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
@@ -49,6 +49,19 @@
 	</li>
     <li><button type="submit" class="device-edit-save">保存修改</button><a class="project-view" href="/project/{{ device.project_id }}">返回查看当前项目</a></li>
 	</form>
+    <script type="text/javascript">
+        $('document').ready(function(){
+            $.validator.addMethod(
+                "regex",
+                function(value, element, regexp) {
+                    var re = new RegExp(regexp);
+                    return this.optional(element) || re.test(value);
+                },
+                "请输入合法数据"
+            );
+            $("#business-form #total").rules("add", { regex: "(^[0-9]+\.[0-9]+$)|(^[0-9]+$)" });
+        });
+    </script>
 
 	</div>
 {% endblock %}

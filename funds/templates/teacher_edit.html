@@ -2,7 +2,7 @@
 {% block content%}
     <div id="home"></div>
     <div class="content_box_content">            
-        <form class="uniform" action="/teacher/edit/{{ teacher.id }}" method="POST">
+        <form class="uniform" action="/teacher/edit/{{ teacher.id }}" method="POST" id="teacher-form">
             <ul>
                 <li>
                 <label>所在系:</label>
@@ -14,8 +14,8 @@
                         {% endfor %}
                     </select>
                     </li>
-                    <li><label>姓名:</label><input type="text" name="name" value="{{ teacher.name }}"/></li>
-                    <li><label>职称:</label><input type="text" name="title" value="{{ teacher.title }}"/></li>
+                    <li><label>姓名:</label><input type="text" name="name" value="{{ teacher.name }}" class="required"/></li>
+                    <li><label>职称:</label><input type="text" name="title" value="{{ teacher.title }}" class="required"//></li>
                     <li><label>是否是系主任:</label><input type="checkbox" name="is_dean" {% if teacher.is_deand  %}checked="checked"{% endif %}/></li>
                     <!--<li><input type="hidden" name="id" value="{{ teacher.id }}"></li>-->
                     <li><button type="submit">提交</button></li>

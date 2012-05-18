@@ -2,17 +2,17 @@
 import time
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.shortcuts import render_to_response, get_object_or_404
 from funds.models import Teacher
 from funds.models import Department
 from funds.models import ProjectType
 from funds.models import Project , Business
 import json
 from funds.models import Device
-from funds.models import Business
 from funds.models import DeviceExpense, BusinessExpense
 from datetime import datetime
 from django.utils.timezone import utc
+import re
 
 def index(request):
     return render_to_response('index.html')
@@ -101,10 +101,25 @@ def project_add(request):
         projectType = ProjectType.objects.get(id=request.POST['project_type'])
         startTime = request.POST['created_at']
         endTime = request.POST['ended_at']
+        print type(startTime)
+        p = re.compile(r'\d{4}\-\d{1,2}-\d{1,2}')
+        if not p.match(startTime):
+            error_message = "请按年-月-日的格式正确输入起始日期"
+            projectTypes = ProjectType.objects.all()
+            return render_to_response('project_add.html', {'project_types': projectTypes, 'error_message': error_message})
+        if not p.match(endTime):
+            error_message = "请按年-月-日的格式正确输入终止日期"
+            projectTypes = ProjectType.objects.all()
+            return render_to_response('project_add.html', {'project_types': projectTypes, 'error_message': error_message})
+        if startTime > endTime:
+            error_message = "起始日期不能大于终止日期, 请重新输入"
+            projectTypes = ProjectType.objects.all()
+            return render_to_response('project_add.html', {'project_types': projectTypes, 'error_message': error_message})
         teacher_list=[]
         for teacher in teacherList:
-            teacherInstance = Teacher.objects.get(id=teacher)
-            teacher_list.append(teacherInstance)
+            if teacher == '':
+                teacherInstance = Teacher.objects.get(id=teacher)
+                teacher_list.append(teacherInstance)
         addProject = Project.objects.create(name=projectName , project_type = projectType, created_at = startTime,ended_at=endTime)
         for teacher in teacher_list:
             addProject.teachers.add(teacher)
@@ -164,13 +179,55 @@ def project_view(request, project_id):
 
 def project_edit(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    #project = Project.objects.get(id=project_id)
-    devices = project.device_set.all()
-    businesses = project.business_set.all()
-    teachers = project.teachers.all()
-    projectTypes = ProjectType.objects.all()
-    return render_to_response('project_edit.html', {'project': project, 'devices': devices,
-        'businesses': businesses, 'teachers': teachers, 'project_types': projectTypes})
+    if request.method == 'POST':
+        teacherList = request.POST.getlist('teachers')
+        projectName = request.POST['name']
+        projectType = ProjectType.objects.get(id=request.POST['project_type'])
+        startTime = request.POST['created_at']
+        endTime = request.POST['ended_at']
+        print type(startTime)
+        p = re.compile(r'\d{4}\-\d{1,2}-\d{1,2}')
+        if not p.match(startTime):
+            error_message = "请按年-月-日的格式正确输入起始日期"
+            devices = project.device_set.all()
+            businesses = project.business_set.all()
+            teachers = project.teachers.all()
+            projectTypes = ProjectType.objects.all()
+            return render_to_response('project_edit.html', {'project': project, 'devices': devices,
+                'businesses': businesses, 'teachers': teachers, 'project_types': projectTypes, 'error_message': error_message})
+        if not p.match(endTime):
+            error_message = "请按年-月-日的格式正确输入终止日期"
+            devices = project.device_set.all()
+            businesses = project.business_set.all()
+            teachers = project.teachers.all()
+            projectTypes = ProjectType.objects.all()
+            return render_to_response('project_edit.html', {'project': project, 'devices': devices,
+                'businesses': businesses, 'teachers': teachers, 'project_types': projectTypes, 'error_message': error_message})
+        if startTime > endTime:
+            error_message = "起始日期不能大于终止日期, 请重新输入"
+            devices = project.device_set.all()
+            businesses = project.business_set.all()
+            teachers = project.teachers.all()
+            projectTypes = ProjectType.objects.all()
+            return render_to_response('project_edit.html', {'project': project, 'devices': devices,
+                'businesses': businesses, 'teachers': teachers, 'project_types': projectTypes, 'error_message': error_message})
+        teacher_list=[]
+        for teacher in teacherList:
+            if teacher == '':
+                teacherInstance = Teacher.objects.get(id=teacher)
+                teacher_list.append(teacherInstance)
+        addProject = Project.objects.create(name=projectName , project_type = projectType, created_at = startTime,ended_at=endTime)
+        for teacher in teacher_list:
+            addProject.teachers.add(teacher)
+        addProject.save()
+    else:
+        #project = Project.objects.get(id=project_id)
+        devices = project.device_set.all()
+        businesses = project.business_set.all()
+        teachers = project.teachers.all()
+        projectTypes = ProjectType.objects.all()
+        return render_to_response('project_edit.html', {'project': project, 'devices': devices,
+            'businesses': businesses, 'teachers': teachers, 'project_types': projectTypes})
 
 def project_add_business(request , project_id):
     if request.method == 'POST':
@@ -241,7 +298,7 @@ def business_edit(request, business_id):
     if request.method == 'POST':
         business = get_object_or_404(Business , pk=business_id)
         business.total = request.POST['total']
-        business.remain = request.POST['remain']
+        business.remain = business.total
         month_to_add = "-12-31 00:00"
         year = request.POST['year']
         year += month_to_add

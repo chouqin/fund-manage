@@ -2,11 +2,11 @@
 {% block content %}
 <div id="home"></div>
 <div class ="content_box_content">
-    <form action="/project/add/business/{{project_id}}" method="POST">
+    <form action="/project/add/business/{{project_id}}" method="POST" id="business-form">
 	<h3>添加业务</h3>
 	<li>
 		<label>项目总额</label>
-		<input type="text" size=15 name="total"/>
+		<input id="total" type="text" size=15 name="total" class="required"/>
 	</li>
 	<li>
 		<label>年份&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
@@ -22,5 +22,18 @@
 		<button class="project-add-business">继续添加业务费</button>
 		<button class="project-add">直接保存</button>
 	</li>
-
+    </form>
+    <script type="text/javascript">
+        $('document').ready(function(){
+            $.validator.addMethod(
+                "regex",
+                function(value, element, regexp) {
+                    var re = new RegExp(regexp);
+                    return this.optional(element) || re.test(value);
+                },
+                "请输入合法数据"
+            );
+            $("#business-form #total").rules("add", { regex: "(^[0-9]+\.[0-9]+$)|(^[0-9]+$)" });
+        });
+    </script>
 {% endblock %}

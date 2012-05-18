@@ -2,7 +2,7 @@
 {% block content%}
     <div id="home"></div>
     <div class="content_box_content">            
-        <form class="uniform" action="/teacher/add" method="POST">
+        <form class="uniform" action="/teacher/add" method="POST" id="teacher-form">
             <ul>
                 <li>
                 <label>所在系:</label>
@@ -12,8 +12,8 @@
                         {% endfor %}
                     </select>
                     </li>
-                    <li><label>姓名:</label><input type="text" name="name"/></li>
-                    <li><label>职称:</label><input type="text" name="title"/></li>
+                    <li><label>姓名:</label><input type="text" name="name" class="required"/></li>
+                    <li><label>职称:</label><input type="text" name="title" class="required"/></li>
                     <li><label>是否是系主任:</label><input type="checkbox" name="is_dean"/></li>
                     <!--<li><label>日期:</label><input type="text" class="hasDatePicker" name="time"/></li>-->
                     <!--<li><input type="submit"/><input type="reset"/></li>-->
