@@ -9,6 +9,8 @@ from funds.models import ProjectType
 from funds.models import Project , Business
 import json
 from funds.models import Device
+from funds.models import Business
+from funds.models import DeviceExpense, BusinessExpense
 from datetime import datetime
 from django.utils.timezone import utc
 
@@ -259,6 +261,57 @@ def business_delete(request, business_id):
         project_id = business.project_id
         business.delete()
         return HttpResponseRedirect('/project/'+str(project_id))
+
+def teacher_select(request):
+    departments = []
+    departmentList = Department.objects.all()
+    for dt in departmentList:
+        teacherList = dt.teacher_set.all()
+        department_teachers={}
+        department_teachers['name']=dt.name
+        department_teachers['teachers'] = teacherList
+        departments.append(department_teachers)
+    return render_to_response('teacher_select.html', {'departments': departments})
+
+def project_select(request, teacher_id):
+    teacher = get_object_or_404(Teacher, pk=teacher_id)
+    projects = teacher.project_set.all()
+    return render_to_response('project_select.html', {'projects': projects, 'teacher': teacher})
+
+def funds_select(request, teacher_id, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    devices = project.device_set.all()
+    businesses = project.business_set.all()
+    teachers = project.teachers.all()
+    return render_to_response('funds_select.html', {'project': project, 'devices': devices, 'businesses': businesses, 'teacher_id': teacher_id, 'teachers': teachers})
+
+
+def device_expense_add(request, device_id, teacher_id):
+    device = get_object_or_404(Device, pk=device_id)
+    if request.method == "POST":
+        #teacher = get_object_or_404(Teacher, pk=teacher_id)
+        amount = request.POST['amount']
+        device_expense = DeviceExpense(device=device, amount=amount, created_at=datetime.now(), status=1, teacher_id=teacher_id)
+        device_expense.save()
+        device.remain_amount = device.remain_amount - int(amount)
+        device.save()
+        return HttpResponseRedirect('/record')
+    else:
+        amounts = device.remain_amount
+        amount_array = range(amounts)
+        return render_to_response('device_expense.html', {'device': device, 'teacher_id': teacher_id, 'amount_array': amount_array})
+
+def business_expense_add(request, business_id, teacher_id):
+    business = get_object_or_404(Business, pk=business_id)
+    if request.method == "POST":
+        amount = request.POST['amount']
+        business_expense = BusinessExpense(business=business, amount=amount, created_at=datetime.now(), status=1, teacher_id=teacher_id)
+        business_expense.save()
+        business.remain = business.remain - float(amount)
+        business.save()
+        return HttpResponseRedirect('/record')
+    else:
+        return render_to_response('business_expense.html', {'business': business, 'teacher_id': teacher_id})
 
 def expense_view(request):
     return render_to_response('index.html')

@@ -67,6 +67,7 @@ class DeviceExpense(models.Model):
     amount = models.IntegerField()
     created_at = models.DateTimeField()
     status = models.IntegerField()
+    teacher = models.ForeignKey(Teacher)
 
     def __unicode__(self):
         return self.amount
@@ -76,6 +77,7 @@ class BusinessExpense(models.Model):
     amount = models.FloatField()
     created_at = models.DateTimeField()
     status = models.IntegerField()
+    teacher = models.ForeignKey(Teacher)
 
     def __unicode__(self):
         return self.amount

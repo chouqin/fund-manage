@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div id="home"></div>
+    <div class="content_box_content"> 
+        <h2>请选择教师进行报销</h2>
+        {% for department in departments %}
+            <table class="tables">
+                <thead>
+                    <h3>{{ department.name }}</h3>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>姓名</th>
+                        <th>职称</th>
+                        <th>系主任</th>
+                        <th>操作</th>
+                    </tr>
+                    {% for teacher in department.teachers %}
+                    <tr>
+                        <td>{{ teacher.name }}</td>
+                        <td>{{ teacher.title }}</td>
+                        <td>
+                            {% if teacher.is_dean %}
+                                是 
+                            {% else %}
+                                否
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="choose" href="/project/select/{{ teacher.id }}" >报销</a> 
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="cleaner"><br/></div>
+
+        {% endfor %}
+    </div> <!-- end of content box content -->
+{% endblock %}
+~

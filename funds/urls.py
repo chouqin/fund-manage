@@ -28,7 +28,11 @@ urlpatterns = patterns('funds.views',
     url(r'^business/edit/(?P<business_id>.+)$','business_edit'),
     url(r'^business/delete/(?P<business_id>.+)$','business_delete'),
     url(r'^project$', 'project_view'),
-    url(r'^expense$', 'expense_add'),
+    url(r'^expense$', 'teacher_select'),
+    url(r'^project/select/(?P<teacher_id>\d+)$', 'project_select'),
+    url(r'^funds/select/(?P<teacher_id>\d+)/(?P<project_id>\d+)$', 'funds_select'),
+    url(r'^deviceExpense/add/(?P<device_id>\d+)/(?P<teacher_id>\d+)$', 'device_expense_add'),
+    url(r'^businessExpense/add/(?P<business_id>\d+)/(?P<teacher_id>\d+)$', 'business_expense_add'),
     url(r'^record$', 'expense_view'),
 
 )
