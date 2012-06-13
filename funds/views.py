@@ -1,5 +1,7 @@
 #coding=utf-8
 import time
+from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
@@ -12,11 +14,71 @@ from funds.models import Device
 from funds.models import DeviceExpense, BusinessExpense
 from datetime import datetime
 from django.utils.timezone import utc
+from django.contrib import auth
+from django.contrib.auth.models import User
 import re
 
+def login_view(request):
+    if request.method == 'POST':
+        if not request.user.is_authenticated():
+            user_name = request.POST.get('user_name','')
+            pass_word = request.POST.get('password','')
+            user = auth.authenticate(username=user_name,password=pass_word)
+            if user is not None and user.is_active:
+                auth.login(request,user)
+                return render_to_response('index.html')
+            else:
+                error_message = "无效的用户或者密码错误"
+                return render_to_response('login_view.html',{'error_message':error_message,})
+        return HttpResponseRedirect('/home')
+    else:
+        if not request.user.is_authenticated():
+            return render_to_response('login_view.html')
+        else:
+            return HttpResponseRedirect('/home')
+
+@login_required
+def logout_view(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/accounts/login/')
+
+@login_required
+def accountInfo(request):
+    if request.method == 'POST':
+        return render_to_response('setPassword.html')
+    else:
+        return render_to_response('accountInfo.html',{'username':request.user.username,'email':request.user.email})
+
+
+
+@login_required
+def setPassword(request):
+    if request.method == 'POST':
+        oldPassword = request.POST.get('oldPassword','')
+        newPassword = request.POST.get('newPassword','')
+        error_message = None
+        if oldPassword == newPassword:
+            error_message = "新密码与旧密码相同"
+            return render_to_response('setPassword.html',{'username':request.user.username,'error_message':error_message})
+        elif newPassword == None :
+            error_message = "密码不能为空"
+            return render_to_response('setPassword.html',{'username':request.user.username,'error_message':error_message})
+        elif len(newPassword) < 6:
+            error_message = "密码长度必须大于6位"
+            return render_to_response('setPassword.html',{'username':request.user.username,'error_message':error_message})
+        else:
+           user = User.objects.get(username__exact=request.user.username)
+           user.set_password(newPassword)
+           user.save()
+        return render_to_response('accountInfo.html',{'username':request.user.username,'email':request.user.email})
+    else:
+        return render_to_response('setPassword.html',{'username':request.user.username,})
+
+@login_required
 def index(request):
     return render_to_response('index.html')
 
+@login_required
 def teacher_view(request):
     departments = []
     departmentList = Department.objects.all()
@@ -28,6 +90,8 @@ def teacher_view(request):
         departments.append(department_teachers)
     return render_to_response('teacher_view.html', {'departments': departments})
 
+
+@login_required
 def teacher_add(request):
     if request.method == 'POST':
         teacher_name = request.POST['name']
@@ -43,6 +107,8 @@ def teacher_add(request):
         departments = Department.objects.all()
         return render_to_response('teacher_add.html', {'departments': departments})
 
+
+@login_required
 def teacher_edit(request, teacher_id):
     if request.method == 'POST':
         teacher = get_object_or_404(Teacher, pk=teacher_id)
@@ -60,11 +126,14 @@ def teacher_edit(request, teacher_id):
         teacher = get_object_or_404(Teacher, pk=teacher_id)
         return render_to_response('teacher_edit.html', {'departments': departments, 'teacher': teacher})
 
+
+@login_required
 def teacher_delete(request, teacher_id):
     teacher = get_object_or_404(Teacher, pk=teacher_id)
     teacher.delete()
     return HttpResponseRedirect('/teacher')
 
+@login_required
 def teacher_search(request, key):
     #print type(key.encode('utf8'))
     teachers = Teacher.objects.filter(name__startswith=key.encode('utf8'))
@@ -78,6 +147,8 @@ def teacher_search(request, key):
     return HttpResponse(json.dumps(result), mimetype='application/json')
 
 
+
+@login_required
 def project_index(request):
     projects = Project.objects.filter(ended_at__gte=datetime.utcnow().replace(tzinfo=utc)).order_by('created_at')
     projects.reverse()
@@ -94,6 +165,9 @@ def project_index(request):
         project_list.append(project_item)
     return render_to_response('project_index.html', {'projects': project_list})
 
+
+
+@login_required
 def project_add(request):
     if request.method == 'POST':
         teacherList = request.POST.getlist('teachers')
@@ -136,6 +210,8 @@ def project_add(request):
         projectTypes = ProjectType.objects.all()
         return render_to_response('project_add.html',{'project_types':projectTypes})
 
+
+@login_required
 def project_add_device(request, project_id):
     if request.method == "POST":
         name = request.POST['name']
@@ -170,6 +246,8 @@ def project_add_device(request, project_id):
         years = [ year + currentTime.tm_year for year in years ]
         return render_to_response('project_add_device.html', {'project_id': project_id ,'years':years})
 
+
+@login_required
 def project_view(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     devices = project.device_set.all()
@@ -177,6 +255,8 @@ def project_view(request, project_id):
     teachers = project.teachers.all()
     return render_to_response('project_view.html', {'project': project, 'devices': devices, 'businesses': businesses, 'teachers': teachers})
 
+
+@login_required
 def project_edit(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     if request.method == 'POST':
@@ -229,6 +309,7 @@ def project_edit(request, project_id):
         return render_to_response('project_edit.html', {'project': project, 'devices': devices,
             'businesses': businesses, 'teachers': teachers, 'project_types': projectTypes})
 
+@login_required
 def project_add_business(request , project_id):
     if request.method == 'POST':
         total = request.POST['total']
@@ -251,14 +332,17 @@ def project_add_business(request , project_id):
         return render_to_response('project_add_business.html',{'years':years , 'project_id':project_id,})
 
 
+@login_required
 def project_delete(request,project_id):
     project = get_object_or_404(Project,pk=project_id)
     project.delete()
     return HttpResponseRedirect('/project')
 
+@login_required
 def project_search(request):
     return render_to_response('index.html')
 
+@login_required
 def device_edit(request, device_id):
     if request.method == 'POST':
         device = get_object_or_404(Device, pk=device_id)
@@ -288,12 +372,14 @@ def device_edit(request, device_id):
         return render_to_response('device_edit.html', {'device': device,'years':years})
 
 
+@login_required
 def device_delete(request, device_id):
     device = get_object_or_404(Device, pk=device_id)
     project_id = device.project_id
     device.delete()
     return HttpResponseRedirect('/project/' + str(project_id))
 
+@login_required
 def business_edit(request, business_id):
     if request.method == 'POST':
         business = get_object_or_404(Business , pk=business_id)
@@ -313,12 +399,14 @@ def business_edit(request, business_id):
         years = [year + currentTime.tm_year for year in years]
         return render_to_response('business_edit.html',{'business':business,'years':years,})
 
+@login_required
 def business_delete(request, business_id):
         business = get_object_or_404(Business,pk=business_id)
         project_id = business.project_id
         business.delete()
         return HttpResponseRedirect('/project/'+str(project_id))
 
+@login_required
 def teacher_select(request):
     departments = []
     departmentList = Department.objects.all()
@@ -330,11 +418,13 @@ def teacher_select(request):
         departments.append(department_teachers)
     return render_to_response('teacher_select.html', {'departments': departments})
 
+@login_required
 def project_select(request, teacher_id):
     teacher = get_object_or_404(Teacher, pk=teacher_id)
     projects = teacher.project_set.all()
     return render_to_response('project_select.html', {'projects': projects, 'teacher': teacher})
 
+@login_required
 def funds_select(request, teacher_id, project_id):
     project = get_object_or_404(Project, pk=project_id)
     devices = project.device_set.all()
@@ -343,6 +433,7 @@ def funds_select(request, teacher_id, project_id):
     return render_to_response('funds_select.html', {'project': project, 'devices': devices, 'businesses': businesses, 'teacher_id': teacher_id, 'teachers': teachers})
 
 
+@login_required
 def device_expense_add(request, device_id, teacher_id):
     device = get_object_or_404(Device, pk=device_id)
     if request.method == "POST":
@@ -359,6 +450,7 @@ def device_expense_add(request, device_id, teacher_id):
         amount_array = [ item + 1 for item in amount_array]
         return render_to_response('device_expense.html', {'device': device, 'teacher_id': teacher_id, 'amount_array': amount_array})
 
+@login_required
 def business_expense_add(request, business_id, teacher_id):
     business = get_object_or_404(Business, pk=business_id)
     if request.method == "POST":
@@ -371,6 +463,7 @@ def business_expense_add(request, business_id, teacher_id):
     else:
         return render_to_response('business_expense.html', {'business': business, 'teacher_id': teacher_id})
 
+@login_required
 def expense_view(request):
     deviceExpenseList = DeviceExpense.objects.all()
     #deviceTeacherList = []
@@ -379,15 +472,19 @@ def expense_view(request):
     businessExpenseList = BusinessExpense.objects.all()
     return render_to_response('expense_view.html',{'deviceExpenseList':deviceExpenseList,'businessExpenseList':businessExpenseList,})
 
+@login_required
 def expense_add(request):
     return render_to_response('index.html')
 
+@login_required
 def record_view_all(request):
     return render_to_response('index.html')
 
+@login_required
 def expense_view_department(request):
     return render_to_response('index.html')
 
+@login_required
 def expense_view_teacher(request):
     return render_to_response('index.html')
 
