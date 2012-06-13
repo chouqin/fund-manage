@@ -97,11 +97,12 @@ def project_index(request):
 def project_add(request):
     if request.method == 'POST':
         teacherList = request.POST.getlist('teachers')
+        print teacherList
         projectName = request.POST['name']
         projectType = ProjectType.objects.get(id=request.POST['project_type'])
         startTime = request.POST['created_at']
         endTime = request.POST['ended_at']
-        print type(startTime)
+        #print type(startTime)
         p = re.compile(r'\d{4}\-\d{1,2}-\d{1,2}')
         if not p.match(startTime):
             error_message = "请按年-月-日的格式正确输入起始日期"
@@ -117,8 +118,9 @@ def project_add(request):
             return render_to_response('project_add.html', {'project_types': projectTypes, 'error_message': error_message})
         teacher_list=[]
         for teacher in teacherList:
-            if teacher == '':
+            if teacher != '':
                 teacherInstance = Teacher.objects.get(id=teacher)
+                print teacherInstance
                 teacher_list.append(teacherInstance)
         addProject = Project.objects.create(name=projectName , project_type = projectType, created_at = startTime,ended_at=endTime)
         for teacher in teacher_list:
@@ -337,8 +339,8 @@ def project_select(request, teacher_id):
 
 def funds_select(request, teacher_id, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    devices = project.device_set.all()
-    businesses = project.business_set.all()
+    devices = project.device_set.filter(remain_amount__gt=0)
+    businesses = project.business_set.filter(remain__gt=0)
     teachers = project.teachers.all()
     return render_to_response('funds_select.html', {'project': project, 'devices': devices, 'businesses': businesses, 'teacher_id': teacher_id, 'teachers': teachers})
 

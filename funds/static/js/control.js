@@ -23,6 +23,7 @@ $('document').ready(function(){
         select: function(event, ui){
             $(this).val(ui.item.label);
             $(this).next().val(ui.item.value);
+            //alert('here');
             return false;
         },
         change: function(event, ui) {

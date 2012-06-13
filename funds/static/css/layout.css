@@ -6,7 +6,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 	margin: 0;
 	padding: 0;
 	border: 0;
-    font-size: 100%;
+    /*font-size: 100%;*/
     font: inherit;
     vertical-align: baseline;
 }
@@ -25,10 +25,7 @@ body {
 	background-attachment: fixed;
 }
 
-a, a:link, a:visited { color: #ea6f0b; font-weight: 700; text-decoration: none; font-size: 11px }
-a:hover { text-decoration: underline; }
 
-a.gototop { display: block; clear: both; float: right; width: 70px; height: 20px; background: url(../images/templatemo_gototop.jpg) no-repeat }
 
 p { margin: 0 0 10px 0; padding: 0; }
 img { border: none; }
@@ -37,7 +34,7 @@ cite { font-weight: bold; color:#000; }
 cite span { color: #000; }
 em { color: #000; font-weight: bold }
 
-a, a:link, a:visited { color: black; font-weight: 700; text-decoration: none; font-size: 11px }
+a, a:link, a:visited { color: black; font-weight: 700; text-decoration: none; font-size: 12px }
 a:hover { text-decoration: underline; }
 
 li {list-style: none;}
@@ -56,7 +53,7 @@ h3 { font-size: 24px; margin: 0 0 15px; padding: 0; }
 h4 { font-size: 18px; margin: 0 0 15px; padding: 0; }
 h5 { font-size: 16px; margin: 0 0 10px; padding: 0;  }
 h6 { font-size: 14px; margin: 0 0 5px; padding: 0; }
-button span {font-size: 0.4em;}
+button span {font-size: 11px;}
 /*.ui-datepicker {font-size: 10px;}*/
 
 /* @group Layout */
@@ -170,13 +167,13 @@ background-color:#EAF2D3;
 color: #fff;
 }
 
-.ui-datepicker .ui-datepicker-title select {font-size:1em; margin:1px 0; } 
+.ui-datepicker .ui-datepicker-title select {font-size:14px; margin:1px 0; } 
 .ui-datepicker select.ui-datepicker-month-year {width: 100%;} 
 .ui-datepicker select.ui-datepicker-month, 
 .ui-datepicker select.ui-datepicker-year { width: 40%;} 
 .ui-datepicker .ui-datepicker-title select.ui-datepicker-year { float: left; } 
 
-.ui-datepicker-div, .ui-datepicker-inline, #ui-datepicker-div {font-size:0.4em}
+.ui-datepicker-div, .ui-datepicker-inline, #ui-datepicker-div {font-size:14px;}
  
 .error {
     font: normal 10px arial;
