@@ -57,7 +57,12 @@ def setPassword(request):
         oldPassword = request.POST.get('oldPassword','')
         newPassword = request.POST.get('newPassword','')
         error_message = None
-        if oldPassword == newPassword:
+        user = User.objects.get(username__exact=request.user.username)
+
+        if not user.check_password(oldPassword):
+            error_message = "请输入正确的旧密码"
+            return render_to_response('setPassword.html',{'username':request.user.username,'error_message':error_message})
+        elif oldPassword == newPassword:
             error_message = "新密码与旧密码相同"
             return render_to_response('setPassword.html',{'username':request.user.username,'error_message':error_message})
         elif newPassword == None :
@@ -67,7 +72,6 @@ def setPassword(request):
             error_message = "密码长度必须大于6位"
             return render_to_response('setPassword.html',{'username':request.user.username,'error_message':error_message})
         else:
-           user = User.objects.get(username__exact=request.user.username)
            user.set_password(newPassword)
            user.save()
         return render_to_response('accountInfo.html',{'username':request.user.username,'email':request.user.email})
