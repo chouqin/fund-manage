@@ -2,14 +2,13 @@
 {% block content %}
 <div id="home"></div>
 <div class="content_box_content">
+        <h2>用户登录</h2>
         {%if error_message%}
             <p class="error">{{ error_message }}<p>
         {% endif %}
            <form action="/accounts/login/" method="POST" >
         {% csrf_token %}
         <li>
-        <label>用户登录</label>
-                <br />
         <label>用户名</label>
          <input type="text" name="user_name"></input>
          <br />

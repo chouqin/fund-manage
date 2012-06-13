@@ -56,6 +56,7 @@ def setPassword(request):
     if request.method == 'POST':
         oldPassword = request.POST.get('oldPassword','')
         newPassword = request.POST.get('newPassword','')
+        repeatPassword = request.POST.get('repeatPassword','')
         error_message = None
         user = User.objects.get(username__exact=request.user.username)
 
@@ -64,6 +65,9 @@ def setPassword(request):
             return render_to_response('setPassword.html',{'username':request.user.username,'error_message':error_message})
         elif oldPassword == newPassword:
             error_message = "新密码与旧密码相同"
+            return render_to_response('setPassword.html',{'username':request.user.username,'error_message':error_message})
+        elif repeatPassword != newPassword:
+            error_message = "重复密码与新密码不一致"
             return render_to_response('setPassword.html',{'username':request.user.username,'error_message':error_message})
         elif newPassword == None :
             error_message = "密码不能为空"
