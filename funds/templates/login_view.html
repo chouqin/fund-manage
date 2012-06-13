@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="home"></div>
+<div class="content_box_content">
+        {%if error_message%}
+            <p class="error">{{ error_message }}<p>
+        {% endif %}
+           <form action="/accounts/login/" method="POST" >
+        {% csrf_token %}
+        <li>
+        <label>用户登录</label>
+                <br />
+        <label>用户名</label>
+         <input type="text" name="user_name"></input>
+         <br />
+        <label>密码 </label>
+        <input type="password" name="password"></input>
+         <br />
+         <button id="login">登录</button>
+        </li>
+        <!--<input id="submit_type" type="hidden" name="submit_type"></input>-->
+        </form>
+        <div class="cleaner"><br/></div>
+</div>
+{% endblock %}
+~              
